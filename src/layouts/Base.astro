@@ -1,15 +1,14 @@
 ---
 import '../styles/global.css';
 import Wordmark from '../components/Wordmark.astro';
-import { url, IS_PREVIEW, LEC_WINTER_START } from '../lib/site';
+import { url, IS_PREVIEW } from '../lib/site';
 
-interface Props { title?: string; description?: string; image?: string; active?: string; ticker?: boolean }
+interface Props { title?: string; description?: string; image?: string; active?: string }
 const {
   title,
   description = 'News. Interviews. Stories. Independent esports media, beyond the game.',
   image = '/brand/og-default.png',
   active = '',
-  ticker = true,
 } = Astro.props;
 const fullTitle = title ? `${title} · M/KE` : 'M/KE · Beyond the game.';
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -61,19 +60,6 @@ const nav = [
       </div>
     </div>
   </header>
-  {ticker && (
-    <div class="ticker">
-      <div class="wrap">
-        <a class="hot tick-cd" href={url('/lec/')} data-countdown={LEC_WINTER_START.toISOString()} data-done="LEC Winter is live">
-          <span data-cd-label>LEC Winter starts in</span>
-          <span class="mini" aria-hidden="true"><b data-u="d">--</b>d</span><span class="mini" aria-hidden="true"><b data-u="h">--</b>h</span><span class="mini" aria-hidden="true"><b data-u="m">--</b>m</span>
-          <span class="sr-only">15 January 2027</span>
-        </a><i>/</i>
-        <a href={url('/interviews/')}>Interviews</a><i>/</i>
-        <a href={url('/standards/')}>How we report</a>
-      </div>
-    </div>
-  )}
   <main id="main"><slot /></main>
   <footer class="site-footer">
     <div class="wrap">
