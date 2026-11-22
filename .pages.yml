@@ -35,10 +35,11 @@ content:
         options:
           values: [News, Feature, Interview, Analysis, Opinion]
       - name: label
-        label: Story label (how solid the reporting is)
+        label: Story label (how solid the reporting is; None = no label)
         type: select
+        default: None
         options:
-          values: [Confirmed, Report, Opinion, Rumour]
+          values: [None, Confirmed, Report, Opinion, Rumour]
       - name: league
         label: League
         type: select

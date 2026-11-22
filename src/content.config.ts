@@ -11,7 +11,9 @@ const articles = defineCollection({
     // What kind of story it is
     kind: z.enum(['News', 'Feature', 'Interview', 'Analysis', 'Opinion']),
     // How solid the reporting is (M/KE editorial standards)
-    label: z.enum(['Confirmed', 'Report', 'Opinion', 'Rumour']).optional(),
+    // 'None' (or empty) means no label: the story shows just its kind and date.
+    label: z.enum(['None', 'Confirmed', 'Report', 'Opinion', 'Rumour']).optional().nullable()
+      .transform((v) => (v && v !== 'None' ? v : undefined)),
     league: z.enum(['LEC', 'LCK', 'LPL', 'LCS', 'First Stand', 'MSI', 'Worlds', 'Other']).default('LEC'),
     author: z.string().default('David'),
     date: z.coerce.date(),
