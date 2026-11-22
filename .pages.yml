@@ -73,6 +73,10 @@ content:
       - name: imageCredit
         label: Photo credit
         type: string
+      - name: tags
+        label: Tags (e.g. LEC, Carzzy, Movistar KOI). Each tag gets its own page
+        type: string
+        list: true
       - name: featured
         label: Lead story on the homepage
         type: boolean

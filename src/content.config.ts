@@ -24,6 +24,8 @@ const articles = defineCollection({
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     imageCredit: z.string().optional(),
+    // Free tags, e.g. ['LEC', 'Carzzy', 'Movistar KOI']. Each becomes a clickable page.
+    tags: z.array(z.string()).nullable().optional().transform((t) => (t ?? []).map((x) => x.trim()).filter(Boolean)),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),

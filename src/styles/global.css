@@ -207,6 +207,11 @@ a:hover { color: var(--accent-text); }
 .prose li + li { margin-top: .4em; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
 body:has(.article-main) .site-footer { margin-top: 0; }
+.tags { max-width: 680px; width: 100%; margin: 8px auto 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { --c: 6px; display: inline-flex; align-items: center; height: 32px; padding: 0 14px; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; background: var(--surface-raised); border: 1px solid var(--line); clip-path: polygon(var(--c) 0, 100% 0, calc(100% - var(--c)) 100%, 0 100%); }
+.tag:hover { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+.tag small { margin-left: 8px; color: var(--ink-muted); font-weight: 700; }
+.tag:hover small { color: var(--obsidian); }
 .more { max-width: 1040px; margin: 80px auto 0; padding-top: 24px; border-top: 2px solid var(--gold); }
 
 /* ---------- Simple pages ---------- */

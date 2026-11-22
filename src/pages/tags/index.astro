@@ -1,0 +1,18 @@
+---
+// All tags in use, most used first.
+import Base from '../../layouts/Base.astro';
+import { allTags, tagUrl } from '../../lib/site';
+const tags = await allTags();
+---
+<Base title="Tags" description="Browse every M/KE story by tag.">
+  <div class="wrap">
+    <section class="section" style="padding-top:48px">
+      <div class="section-head"><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">Tags</h1></div>
+      {tags.length ? (
+        <nav class="tags" style="max-width:none;margin:0" aria-label="All tags">
+          {tags.map((t) => <a class="tag" href={tagUrl(t.name)}>{t.name}<small>{t.items.length}</small></a>)}
+        </nav>
+      ) : <p class="standfirst">No tags yet.</p>}
+    </section>
+  </div>
+</Base>

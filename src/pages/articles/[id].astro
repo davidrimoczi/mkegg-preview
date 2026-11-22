@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import StoryLabel from '../../components/StoryLabel.astro';
 import Picture from '../../components/Picture.astro';
 import { render } from 'astro:content';
-import { articles, articleUrl, url, fmtDate, type Article } from '../../lib/site';
+import { articles, articleUrl, url, fmtDate, tagUrl, type Article } from '../../lib/site';
 import { leagueByName } from '../../data/leagues';
 import { authorByName } from '../../data/authors';
 import { socialImage, mediaMeta } from '../../lib/media';
@@ -34,6 +34,7 @@ const ld = {
   author: [{ '@type': 'Person', name: d.author, ...(authorUrl ? { url: abs(authorUrl) } : {}) }],
   publisher: { '@type': 'NewsMediaOrganization', name: 'M/KE', url: abs(url('/')), logo: { '@type': 'ImageObject', url: abs(url('/brand/og-default.png')) } },
   articleSection: d.league,
+  ...(d.tags.length ? { keywords: d.tags.join(', ') } : {}),
   isAccessibleForFree: true,
 };
 const section = { News: 'news', Feature: 'features', Interview: 'interviews', Analysis: 'analysis', Opinion: 'analysis' }[d.kind];
@@ -69,6 +70,11 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
       <Picture class="hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" eager />
       {d.imageCredit && <p class="credit">Photo: {d.imageCredit}</p>}
       <div class="prose"><Content /></div>
+      {d.tags.length > 0 && (
+        <nav class="tags" aria-label="Tags">
+          {d.tags.map((t) => <a class="tag" href={tagUrl(t)} rel="tag">{t}</a>)}
+        </nav>
+      )}
     </article>
     {next.length > 0 && (
       <section class="more" aria-labelledby="next-h">

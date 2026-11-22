@@ -1,0 +1,31 @@
+---
+// One page per tag: every article with that tag, newest first.
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import StoryLabel from '../../components/StoryLabel.astro';
+import { allTags, articleUrl, url, ago, type Article } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await allTags()).map((t) => ({ params: { tag: t.slug }, props: { name: t.name, items: t.items } }));
+}
+const { name, items } = Astro.props as { name: string; items: Article[] };
+---
+<Base title={name} description={`Every M/KE story tagged ${name}.`}>
+  <div class="wrap">
+    <section class="section" style="padding-top:48px">
+      <a class="eyebrow" href={url('/tags/')}>Tag /</a>
+      <div class="section-head" style="margin-top:10px"><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">{name}</h1><span class="meta">{items.length} {items.length === 1 ? 'story' : 'stories'}</span></div>
+      <div class="cards">
+        {items.map((a) => (
+          <a class="card" href={articleUrl(a)}>
+            <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" sizes="(max-width: 900px) 100vw, 400px" />
+            <div style="display:flex;gap:10px;align-items:center"><StoryLabel label={a.data.label} /><span class="meta">{a.data.league} · {a.data.kind}</span></div>
+            <span class="t">{a.data.title}</span>
+            <span class="d">{a.data.standfirst}</span>
+            <span class="when">{ago(a.data.date)}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
