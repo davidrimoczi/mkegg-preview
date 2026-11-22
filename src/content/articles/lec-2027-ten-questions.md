@@ -7,8 +7,11 @@ label: None
 league: LEC
 author: David
 date: 2026-11-22T05:55
+updated: 2026-11-22T06:19
 readTime: 12
 image: /media/55540157118_62e81ab584_k.jpg
+tags:
+  - lec
 featured: true
 draft: true
 ---
