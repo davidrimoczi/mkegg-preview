@@ -4,7 +4,7 @@ standfirst: "[Sample article. The argument in one sentence.]"
 kind: Opinion
 label: Opinion
 league: LEC
-author: David
+author: Damilosk
 date: 2026-11-19T12:00:00+01:00
 readTime: 5
 draft: true

@@ -4,7 +4,7 @@ standfirst: "[Sample article. The question the analysis answers.]"
 kind: Analysis
 label: None
 league: LEC
-author: David
+author: Damilosk
 date: 2026-11-14T10:30
 readTime: 6
 tags:

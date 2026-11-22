@@ -4,7 +4,7 @@ standfirst: "[Sample article. Key dates for the season in one line.]"
 kind: News
 label: Confirmed
 league: LPL
-author: David
+author: Damilosk
 date: 2026-11-18T09:15
 readTime: 2
 tags:

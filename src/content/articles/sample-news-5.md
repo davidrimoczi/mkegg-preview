@@ -4,7 +4,7 @@ standfirst: "[Sample article. Where it is, when it is, and who qualifies.]"
 kind: News
 label: Rumour
 league: MSI
-author: David
+author: Damilosk
 date: 2026-11-15T14:00
 readTime: 2
 tags:

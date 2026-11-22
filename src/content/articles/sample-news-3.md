@@ -4,7 +4,7 @@ standfirst: "[Sample article. Who signed, from where, and for how long.]"
 kind: News
 label: Report
 league: LCK
-author: David
+author: Damilosk
 date: 2026-11-20T11:00
 readTime: 2
 tags:

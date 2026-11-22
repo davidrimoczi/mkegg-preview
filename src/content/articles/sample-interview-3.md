@@ -4,7 +4,7 @@ standfirst: "[Sample article. One line on what the conversation covers.]"
 kind: Interview
 label: None
 league: Other
-author: David
+author: Damilosk
 date: 2026-11-19T16:00
 readTime: 7
 tags:

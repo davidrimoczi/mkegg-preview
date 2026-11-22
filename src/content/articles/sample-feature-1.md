@@ -4,7 +4,7 @@ standfirst: "[Sample article. Why this story matters, in two sentences.]"
 kind: Feature
 label: None
 league: LEC
-author: David
+author: Damilosk
 date: 2026-11-17T08:00
 readTime: 14
 image: /media/52685370265_01ed4bb8e4_k.jpg

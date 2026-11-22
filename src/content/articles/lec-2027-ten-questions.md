@@ -5,7 +5,7 @@ standfirst: "[Sample article. Standfirst: one or two sentences on why this
 kind: News
 label: None
 league: LEC
-author: David
+author: Damilosk
 date: 2026-11-22T05:55
 updated: 2026-11-22T06:19
 readTime: 12
