@@ -9,7 +9,7 @@ author: David
 date: 2026-11-22T05:55
 readTime: 12
 image: /media/55540157118_62e81ab584_k.jpg
-featured: false
+featured: true
 draft: true
 ---
 [Sample article. This is placeholder text to show how a feature looks. It only appears on the preview site.]
