@@ -12,7 +12,7 @@ const articles = defineCollection({
     kind: z.enum(['News', 'Feature', 'Interview', 'Analysis', 'Opinion']),
     // How solid the reporting is (M/KE editorial standards)
     label: z.enum(['Confirmed', 'Report', 'Opinion', 'Rumour']).optional(),
-    league: z.enum(['LEC', 'LCK', 'LPL', 'LCS', 'International', 'Other']).default('LEC'),
+    league: z.enum(['LEC', 'LCK', 'LPL', 'LCS', 'First Stand', 'MSI', 'Worlds', 'Other']).default('LEC'),
     author: z.string().default('David'),
     date: z.coerce.date(),
     readTime: z.number().int().positive().optional(),

@@ -44,7 +44,7 @@ content:
         type: select
         default: LEC
         options:
-          values: [LEC, LCK, LPL, LCS, International, Other]
+          values: [LEC, LCK, LPL, LCS, First Stand, MSI, Worlds, Other]
       - name: author
         label: Author
         type: string

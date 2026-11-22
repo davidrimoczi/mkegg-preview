@@ -1,0 +1,20 @@
+---
+// The Leagues panel on the homepage: every competition M/KE covers, with its current stage.
+import { LEAGUES } from '../data/leagues';
+import { url } from '../lib/site';
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<nav class="leagues" aria-labelledby="leagues-h">
+  <h2 id="leagues-h" class="eyebrow">Leagues</h2>
+  <ul>
+    {LEAGUES.map((l) => (
+      <li>
+        <a href={url(`/${l.slug}/`)} aria-current={current === l.slug ? 'page' : undefined}>
+          <span class="badge" aria-hidden="true">{l.badge}</span>
+          <span class="txt"><b>{l.name}</b><span>{l.status}</span></span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

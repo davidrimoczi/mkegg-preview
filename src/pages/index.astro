@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import StoryLabel from '../components/StoryLabel.astro';
 import Picture from '../components/Picture.astro';
 import Countdown from '../components/Countdown.astro';
+import LeagueList from '../components/LeagueList.astro';
 import { articles, articleUrl, url, ago, LEC_WINTER_START } from '../lib/site';
 
 const all = await articles();
@@ -34,6 +35,7 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
               <span class="when">{a.data.kind} · {ago(a.data.date)}</span>
             </a>
           )) : <p class="when">More stories soon.</p>}
+          <LeagueList />
         </aside>
       </section>
     ) : (
@@ -43,6 +45,7 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
           <h1>Beyond the <em>game.</em></h1>
           <p class="standfirst">News. Interviews. Stories. The first M/KE pieces land on 4 January 2027.</p>
         </div>
+        <aside class="latest"><LeagueList /></aside>
       </section>
     )}
 

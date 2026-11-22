@@ -4,6 +4,7 @@ import StoryLabel from '../../components/StoryLabel.astro';
 import Picture from '../../components/Picture.astro';
 import { render } from 'astro:content';
 import { articles, articleUrl, url, fmtDate, type Article } from '../../lib/site';
+import { leagueByName } from '../../data/leagues';
 
 export async function getStaticPaths() {
   const all = await articles();
@@ -13,13 +14,14 @@ const { article, all } = Astro.props as { article: Article; all: Article[] };
 const { Content } = await render(article);
 const d = article.data;
 const next = all.filter((a) => a.id !== article.id).slice(0, 3);
+const hub = leagueByName(d.league);
 const section = { News: 'news', Feature: 'features', Interview: 'interviews', Analysis: 'analysis', Opinion: 'analysis' }[d.kind];
 ---
 <Base title={d.title} description={d.standfirst} image={d.image} ticker={false}>
   <div class="article-main" data-reading>
     <article class="article">
       <div class="crumbs">
-        <a href={url(d.league === 'LEC' ? '/lec/' : '/')}>{d.league}</a><span aria-hidden="true">/</span><a href={url(`/${section}/`)}>{d.kind}</a>
+        <a href={url(hub ? `/${hub.slug}/` : '/')}>{d.league}</a><span aria-hidden="true">/</span><a href={url(`/${section}/`)}>{d.kind}</a>
       </div>
       <h1>{d.title}</h1>
       <p class="standfirst" style="font-size:clamp(18px,1.8vw,22px)">{d.standfirst}</p>

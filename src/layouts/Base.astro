@@ -15,11 +15,8 @@ const fullTitle = title ? `${title} · M/KE` : 'M/KE · Beyond the game.';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(url(image), Astro.site);
 const nav = [
-  { href: '/lec/', label: 'LEC', key: 'lec' },
   { href: '/news/', label: 'News', key: 'news' },
   { href: '/interviews/', label: 'Interviews', key: 'interviews' },
-  { href: '/features/', label: 'Features', key: 'features' },
-  { href: '/analysis/', label: 'Analysis', key: 'analysis' },
 ];
 ---
 <!doctype html>

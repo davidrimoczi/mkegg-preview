@@ -1,0 +1,30 @@
+---
+// A list page for one or more kinds of story (News, Interviews, ...).
+import Base from '../layouts/Base.astro';
+import Picture from './Picture.astro';
+import StoryLabel from './StoryLabel.astro';
+import { articles, articleUrl, ago } from '../lib/site';
+interface Props { title: string; kinds: string[]; active?: string }
+const { title, kinds, active } = Astro.props;
+const list = (await articles()).filter((a) => kinds.includes(a.data.kind));
+---
+<Base title={title} active={active}>
+  <div class="wrap">
+    <section class="section" style="padding-top:48px">
+      <div class="section-head"><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">{title}</h1></div>
+      {list.length ? (
+        <div class="cards">
+          {list.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" />
+              <div style="display:flex;gap:10px;align-items:center"><StoryLabel label={a.data.label} /><span class="meta">{a.data.league}</span></div>
+              <span class="t">{a.data.title}</span>
+              <span class="d">{a.data.standfirst}</span>
+              <span class="when">{ago(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      ) : <p class="standfirst">Nothing here yet. The first {title.toLowerCase()} land on 4 January 2027.</p>}
+    </section>
+  </div>
+</Base>

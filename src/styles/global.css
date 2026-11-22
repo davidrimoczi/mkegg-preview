@@ -127,12 +127,25 @@ a:hover { color: var(--accent-text); }
 .cell:first-child b { color: var(--accent-text); }
 .cell span { margin-top: 5px; font-size: 8px; font-weight: 800; letter-spacing: .22em; color: var(--accent-text); }
 
+/* ---------- Leagues panel ---------- */
+.leagues { margin-top: 28px; border: 1px solid var(--line); background: var(--surface-raised); }
+.leagues h2 { margin: 0; padding: 16px 18px 10px; }
+.leagues ul { list-style: none; margin: 0; padding: 0; }
+.leagues li + li { border-top: 1px solid var(--line); }
+.latest .leagues a { display: flex; flex-direction: row; align-items: center; gap: 14px; padding: 12px 18px; border-bottom: 0; }
+.leagues a:hover { background: var(--surface-sunk); color: var(--ink); }
+.leagues .badge { --c: 7px; flex: none; width: 52px; height: 30px; display: grid; place-items: center; background: var(--gold); color: var(--obsidian); font-size: 10px; font-weight: 900; letter-spacing: .08em; clip-path: polygon(var(--c) 0, 100% 0, calc(100% - var(--c)) 100%, 0 100%); }
+.leagues .txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.leagues .txt b { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+.leagues .txt span { font-size: 12.5px; color: var(--ink-muted); }
+
 /* ---------- League hub ---------- */
 .live-strip { background: var(--live); color: var(--obsidian); }
 .live-strip .wrap { padding-block: 10px; display: flex; gap: 14px; align-items: center; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; flex-wrap: wrap; }
 .live-strip .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--obsidian); display: inline-block; margin-right: 6px; }
 .league-tabs { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 28px; }
-.league-tabs a { --c: 12px; padding: 10px 22px; font-size: 12px; font-weight: 800; letter-spacing: .14em; background: var(--surface-raised); clip-path: polygon(var(--c) 0, 100% 0, calc(100% - var(--c)) 100%, 0 100%); }
+.league-tabs a { white-space: nowrap;
+   --c: 12px; padding: 10px 22px; font-size: 12px; font-weight: 800; letter-spacing: .14em; background: var(--surface-raised); clip-path: polygon(var(--c) 0, 100% 0, calc(100% - var(--c)) 100%, 0 100%); }
 .league-tabs a[aria-current='page'] { background: var(--gold); color: var(--obsidian); }
 .hub-hero { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: start; padding-top: 40px; }
 .hub-hero h1 { margin: 0; font-size: clamp(52px, 7vw, 88px); line-height: .92; font-weight: 900; letter-spacing: -.06em; }
@@ -145,6 +158,11 @@ a:hover { color: var(--accent-text); }
 .row .r { text-align: right; color: var(--ink-muted); font-size: 13px; }
 .row .d { color: var(--ink-muted); font-size: 13px; }
 .note { font-size: 13px; color: var(--ink-muted); line-height: 1.5; margin: 12px 0 0; }
+.standings { width: 100%; border-collapse: collapse; font-weight: 700; }
+.standings th { text-align: left; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+.standings td { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.standings td:first-child { color: var(--accent-text); width: 40px; }
+.standings th:last-child, .standings td:last-child { text-align: right; }
 .cards-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
 
 /* ---------- Article + reading light ---------- */

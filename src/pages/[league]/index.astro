@@ -1,0 +1,67 @@
+---
+// One hub page per competition: /lec/, /lck/, /lpl/, /lcs/, /first-stand/, /msi/, /worlds/
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import Countdown from '../../components/Countdown.astro';
+import { LEAGUES, type League } from '../../data/leagues';
+import { articles, articleUrl, url, ago } from '../../lib/site';
+
+export function getStaticPaths() {
+  return LEAGUES.map((league) => ({ params: { league: league.slug }, props: { league } }));
+}
+const { league } = Astro.props as { league: League };
+const stories = (await articles()).filter((a) => a.data.league === league.name);
+const preview = stories.find((a) => a.data.featured) ?? stories[0];
+const isInternational = league.badge === 'INT';
+---
+<Base title={league.name} description={`${league.full}: news, interviews, schedule and standings from M/KE.`}>
+  <div class="wrap">
+    <nav class="league-tabs" aria-label="Leagues">
+      {LEAGUES.map((l) => <a href={url(`/${l.slug}/`)} aria-current={l.slug === league.slug ? 'page' : undefined}>{l.name.toUpperCase()}</a>)}
+    </nav>
+
+    <section class="hub-hero">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span class="eyebrow">{league.full} · {league.status}</span>
+        <h1>{league.name} <em>2027.</em></h1>
+        <p class="standfirst">{league.blurb}</p>
+        {preview && <a class="btn btn-primary" style="align-self:flex-start" href={articleUrl(preview)}>Read the latest</a>}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="panel">
+          <h2>Upcoming games</h2>
+          {league.schedule.length ? league.schedule.map((m) => (
+            <div class="row"><span class="d">{m.day}</span><span>{m.a}</span><span class="vs">vs</span><span>{m.b}</span><span class="r">{m.time}</span></div>
+          )) : <p class="note">The schedule goes up here as soon as Riot publishes it. All times CET.</p>}
+        </div>
+        <div class="panel">
+          <h2>{isInternational ? 'Results' : 'Standings'}</h2>
+          {league.standings.length ? (
+            <table class="standings">
+              <thead><tr><th scope="col">#</th><th scope="col">Team</th><th scope="col">W–L</th></tr></thead>
+              <tbody>{league.standings.map((s, i) => <tr><td>{i + 1}</td><td>{s.team}</td><td>{s.w}–{s.l}</td></tr>)}</tbody>
+            </table>
+          ) : <p class="note">{isInternational ? 'Results appear here once the event starts.' : 'Standings appear here once the season starts.'}</p>}
+        </div>
+      </div>
+    </section>
+
+    {league.start && <Countdown to={league.start} label={`${league.name} starts in`} done={`${league.name} is live`} />}
+
+    <section class="section" aria-labelledby="hub-news">
+      <div class="section-head"><h2 id="hub-news">{league.name} news</h2></div>
+      {stories.length ? (
+        <div class="cards cards-4">
+          {stories.slice(0, 12).map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" />
+              <span class="meta" style="color:var(--accent-text)">{a.data.label ?? a.data.kind}</span>
+              <span class="t" style="font-size:20px">{a.data.title}</span>
+              <span class="when">{ago(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      ) : <p class="note">{league.name} coverage starts soon.</p>}
+    </section>
+  </div>
+</Base>
