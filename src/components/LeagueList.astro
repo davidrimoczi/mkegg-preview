@@ -11,7 +11,9 @@ const { current } = Astro.props;
     {LEAGUES.map((l) => (
       <li>
         <a href={url(`/${l.slug}/`)} aria-current={current === l.slug ? 'page' : undefined}>
-          <span class="badge" aria-hidden="true">{l.badge}</span>
+          {l.logo
+            ? <span class="lg-logo" aria-hidden="true"><img src={url(l.logo)} alt="" width="48" height="48" class={l.mono ? 'mono' : undefined} loading="lazy" decoding="async" /></span>
+            : <span class="badge" aria-hidden="true">{l.badge}</span>}
           <span class="txt"><b>{l.name}</b><span>{l.status}</span></span>
         </a>
       </li>

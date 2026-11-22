@@ -140,6 +140,9 @@ a:hover { color: var(--accent-text); }
 .leagues a { display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
 .leagues a:hover { background: var(--surface-sunk); color: var(--ink); }
 .leagues .badge { --c: 6px; flex: none; width: 46px; height: 26px; display: grid; place-items: center; background: var(--gold); color: var(--obsidian); font-size: 9.5px; font-weight: 900; letter-spacing: .08em; clip-path: polygon(var(--c) 0, 100% 0, calc(100% - var(--c)) 100%, 0 100%); }
+.leagues .lg-logo { flex: none; width: 46px; height: 30px; display: grid; place-items: center; }
+.leagues .lg-logo img { max-width: 30px; max-height: 30px; width: auto; height: auto; object-fit: contain; }
+[data-theme='light'] .leagues .lg-logo img.mono { filter: brightness(0); }
 .leagues .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .leagues .txt b { font-size: 14.5px; font-weight: 800; letter-spacing: -.01em; }
 .leagues .txt span { font-size: 12px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

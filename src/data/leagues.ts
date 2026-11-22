@@ -9,7 +9,9 @@ export type League = {
   slug: string;          // URL: /lec/
   name: string;          // LEC
   full: string;          // League of Legends EMEA Championship
-  badge: string;         // region shown in the slanted badge
+  badge: string;         // region shown in the slanted badge (fallback if no logo)
+  logo?: string;         // official logo in public/leagues/, shown in the Leagues panel
+  mono?: boolean;        // white-only logo: shown dark in light mode
   status: string;        // one line under the name in the Leagues panel
   blurb: string;         // standfirst on the hub page
   start?: Date;          // confirmed start, drives the countdown
@@ -19,44 +21,44 @@ export type League = {
 
 export const LEAGUES: League[] = [
   {
-    slug: 'lec', name: 'LEC', full: 'League of Legends EMEA Championship', badge: 'EMEA',
+    slug: 'lec', logo: '/leagues/lec.webp', mono: true, name: 'LEC', full: 'League of Legends EMEA Championship', badge: 'EMEA',
     status: 'Winter · from 15 January',
     blurb: 'News, interviews and analysis from Europe\'s top league, starting with the 2027 Winter Split.',
     start: new Date('2027-01-15T00:00:00+01:00'),
     schedule: [], standings: [],
   },
   {
-    slug: 'lck', name: 'LCK', full: 'League of Legends Champions Korea', badge: 'KR',
+    slug: 'lck', logo: '/leagues/lck.webp', mono: true, name: 'LCK', full: 'League of Legends Champions Korea', badge: 'KR',
     status: '2027 season · dates TBA',
     blurb: 'The biggest stories from Korea\'s top league.',
     schedule: [], standings: [],
   },
   {
-    slug: 'lpl', name: 'LPL', full: 'League of Legends Pro League', badge: 'CN',
+    slug: 'lpl', logo: '/leagues/lpl.webp', name: 'LPL', full: 'League of Legends Pro League', badge: 'CN',
     status: '2027 season · dates TBA',
     blurb: 'The biggest stories from China\'s top league.',
     schedule: [], standings: [],
   },
   {
-    slug: 'lcs', name: 'LCS', full: 'League Championship Series', badge: 'NA',
+    slug: 'lcs', logo: '/leagues/lcs.webp', mono: true, name: 'LCS', full: 'League Championship Series', badge: 'NA',
     status: '2027 season · dates TBA',
     blurb: 'The biggest stories from North America\'s top league.',
     schedule: [], standings: [],
   },
   {
-    slug: 'first-stand', name: 'First Stand', full: 'First Stand', badge: 'INT',
+    slug: 'first-stand', logo: '/leagues/first-stand.webp', name: 'First Stand', full: 'First Stand', badge: 'INT',
     status: '2027 · dates TBA',
     blurb: 'Riot\'s first international event of the year.',
     schedule: [], standings: [],
   },
   {
-    slug: 'msi', name: 'MSI', full: 'Mid-Season Invitational', badge: 'INT',
+    slug: 'msi', logo: '/leagues/msi.webp', name: 'MSI', full: 'Mid-Season Invitational', badge: 'INT',
     status: '2027 · dates TBA',
     blurb: 'The mid-season clash of the world\'s best teams.',
     schedule: [], standings: [],
   },
   {
-    slug: 'worlds', name: 'Worlds', full: 'League of Legends World Championship', badge: 'INT',
+    slug: 'worlds', logo: '/leagues/worlds.webp', mono: true, name: 'Worlds', full: 'League of Legends World Championship', badge: 'INT',
     status: '2027 · dates TBA',
     blurb: 'The biggest event of the year.',
     schedule: [], standings: [],
