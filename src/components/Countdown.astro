@@ -1,0 +1,29 @@
+---
+// Slanted countdown cells (brand guide: Countdown). Counts to `to`, then shows `done`.
+interface Props { to: Date; label: string; done: string }
+const { to, label, done } = Astro.props;
+---
+<div class="countdown-band" data-countdown={to.toISOString()} data-done={done}>
+  <span class="eyebrow" data-cd-label>{label}</span>
+  <div class="cd" aria-live="off">
+    <div class="cell"><b data-u="d">--</b><span>DAYS</span></div><i aria-hidden="true">/</i>
+    <div class="cell"><b data-u="h">--</b><span>HOURS</span></div><i aria-hidden="true">/</i>
+    <div class="cell"><b data-u="m">--</b><span>MINUTES</span></div>
+  </div>
+</div>
+<script is:inline>
+  document.querySelectorAll('[data-countdown]').forEach(function (el) {
+    var target = new Date(el.dataset.countdown).valueOf();
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    var tick = function () {
+      var ms = target - Date.now();
+      if (ms <= 0) { el.querySelector('.cd').remove(); el.querySelector('[data-cd-label]').textContent = el.dataset.done; return; }
+      var s = Math.floor(ms / 1000);
+      el.querySelector('[data-u="d"]').textContent = pad(Math.floor(s / 86400));
+      el.querySelector('[data-u="h"]').textContent = pad(Math.floor(s % 86400 / 3600));
+      el.querySelector('[data-u="m"]').textContent = pad(Math.floor(s % 3600 / 60));
+      setTimeout(tick, 30000);
+    };
+    tick();
+  });
+</script>

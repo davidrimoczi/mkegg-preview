@@ -1,0 +1,12 @@
+---
+// An article image, or a branded placeholder until real photos exist.
+import { url } from '../lib/site';
+interface Props { src?: string; alt?: string; note?: string; ratio?: string; class?: string; eager?: boolean }
+const { src, alt = '', note = 'Photo', ratio = '16 / 9', class: cls = '', eager = false } = Astro.props;
+const resolved = src && !/^https?:/.test(src) ? url(src) : src;
+---
+<div class={`ph ${cls}`} style={`aspect-ratio:${ratio}`}>
+  {resolved
+    ? <img src={resolved} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    : <span class="ph-note" aria-hidden="true">{note}</span>}
+</div>

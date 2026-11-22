@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import Countdown from '../../components/Countdown.astro';
+import { articles, articleUrl, url, ago, LEC_WINTER_START } from '../../lib/site';
+
+const lec = (await articles()).filter((a) => a.data.league === 'LEC');
+const preview = lec.find((a) => a.data.featured) ?? lec[0];
+const cards = lec.slice(0, 8);
+// Week 1 fixtures: fill in once Riot publishes the schedule.
+const week1: { day: string; a: string; b: string; time: string }[] = [];
+---
+<Base title="LEC" description="LEC news, interviews and analysis from M/KE." active="lec">
+  <div class="wrap">
+    <nav class="league-tabs" aria-label="Leagues">
+      <a href={url('/lec/')} aria-current="page">LEC</a>
+    </nav>
+
+    <section class="hub-hero">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span class="eyebrow">LEC Winter 2027 · from 15 January</span>
+        <h1>The LEC is <em>back.</em></h1>
+        <p class="standfirst">Previews, interviews and analysis for the new season, from the people who make the scene.</p>
+        {preview && <a class="btn btn-primary" style="align-self:flex-start" href={articleUrl(preview)}>Read the season preview</a>}
+      </div>
+      <div class="panel">
+        <h2>Week 1 schedule</h2>
+        {week1.length ? week1.map((m) => (
+          <div class="row"><span class="d">{m.day}</span><span>{m.a}</span><span class="vs">vs</span><span>{m.b}</span><span class="r">{m.time}</span></div>
+        )) : <p class="note">The schedule goes up here as soon as Riot publishes it. All times will be CET.</p>}
+      </div>
+    </section>
+
+    <Countdown to={LEC_WINTER_START} label="First match in" done="LEC Winter 2027 is live" />
+
+    <section class="section" aria-labelledby="lec-news">
+      <div class="section-head"><h2 id="lec-news">LEC stories</h2></div>
+      {cards.length ? (
+        <div class="cards cards-4">
+          {cards.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" />
+              <span class="meta" style="color:var(--accent-text)">{a.data.label ?? a.data.kind}</span>
+              <span class="t" style="font-size:20px">{a.data.title}</span>
+              <span class="when">{ago(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      ) : <p class="note">LEC coverage starts on 4 January.</p>}
+    </section>
+  </div>
+</Base>

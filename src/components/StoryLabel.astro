@@ -1,0 +1,6 @@
+---
+// The four M/KE story labels: how solid the reporting is.
+interface Props { label?: 'Confirmed' | 'Report' | 'Opinion' | 'Rumour' | 'Live' }
+const { label } = Astro.props;
+---
+{label && <span class={`lbl lbl-${label.toLowerCase()}`}>{label}</span>}

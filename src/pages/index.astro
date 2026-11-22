@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import StoryLabel from '../components/StoryLabel.astro';
+import Picture from '../components/Picture.astro';
+import Countdown from '../components/Countdown.astro';
+import { articles, articleUrl, url, ago, LEC_WINTER_START } from '../lib/site';
+
+const all = await articles();
+const lead = all.find((a) => a.data.featured) ?? all[0];
+const rest = all.filter((a) => a !== lead);
+const latest = rest.slice(0, 4);
+const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).slice(0, 3);
+---
+<Base>
+  <div class="wrap">
+    {lead ? (
+      <section class="lead-grid">
+        <article class="lead">
+          <a href={articleUrl(lead)}><Picture src={lead.data.image} alt={lead.data.imageAlt} note="Lead photo" eager /></a>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <StoryLabel label={lead.data.label} />
+            <span class="meta">{lead.data.league} · {lead.data.kind}{lead.data.readTime ? ` · ${lead.data.readTime} min read` : ''}</span>
+          </div>
+          <h1><a href={articleUrl(lead)}>{lead.data.title}</a></h1>
+          <p class="standfirst">{lead.data.standfirst}</p>
+          <p class="byline">By {lead.data.author}</p>
+        </article>
+        <aside class="latest" aria-labelledby="latest-h">
+          <h2 id="latest-h" class="eyebrow">Latest</h2>
+          {latest.length ? latest.map((a) => (
+            <a href={articleUrl(a)}>
+              <StoryLabel label={a.data.label ?? (a.data.kind === 'Opinion' ? 'Opinion' : undefined)} />
+              <span class="t">{a.data.title}</span>
+              <span class="when">{a.data.kind} · {ago(a.data.date)}</span>
+            </a>
+          )) : <p class="when">More stories soon.</p>}
+        </aside>
+      </section>
+    ) : (
+      <section class="lead-grid">
+        <div class="lead">
+          <span class="eyebrow">Independent esports media</span>
+          <h1>Beyond the <em>game.</em></h1>
+          <p class="standfirst">News. Interviews. Stories. The first M/KE pieces land on 4 January 2027.</p>
+        </div>
+      </section>
+    )}
+
+    <Countdown to={LEC_WINTER_START} label="LEC Winter 2027 starts in" done="LEC Winter 2027 is live" />
+
+    {interviews.length > 0 && (
+      <section class="section" aria-labelledby="int-h">
+        <div class="section-head"><h2 id="int-h">Interviews</h2><a href={url('/interviews/')}>All interviews /</a></div>
+        <div class="cards">
+          {interviews.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} note="Portrait" ratio="4 / 3" />
+              <span class="meta">{a.data.league}</span>
+              <span class="t">{a.data.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="newsletter" aria-labelledby="nl-h">
+      <div class="copy">
+        <span class="eyebrow">The M/KE Brief</span>
+        <h2 id="nl-h">The week in esports, in five minutes.</h2>
+        <p>Our newsletter is coming soon. Until then, follow us on X for every story as it lands.</p>
+      </div>
+      <a class="btn btn-primary" href="https://x.com/mkeggcom" rel="noopener">Follow @mkeggcom</a>
+    </section>
+  </div>
+</Base>

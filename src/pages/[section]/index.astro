@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import StoryLabel from '../../components/StoryLabel.astro';
+import { articles, articleUrl, ago } from '../../lib/site';
+
+const SECTIONS = {
+  news: { title: 'News', kinds: ['News'] },
+  interviews: { title: 'Interviews', kinds: ['Interview'] },
+  features: { title: 'Features', kinds: ['Feature'] },
+  analysis: { title: 'Analysis', kinds: ['Analysis', 'Opinion'] },
+} as const;
+
+export function getStaticPaths() {
+  return ['news', 'interviews', 'features', 'analysis'].map((section) => ({ params: { section } }));
+}
+const key = Astro.params.section as keyof typeof SECTIONS;
+const s = SECTIONS[key];
+const list = (await articles()).filter((a) => (s.kinds as readonly string[]).includes(a.data.kind));
+---
+<Base title={s.title} active={key}>
+  <div class="wrap">
+    <section class="section" style="padding-top:48px">
+      <div class="section-head"><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">{s.title}</h1></div>
+      {list.length ? (
+        <div class="cards">
+          {list.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" />
+              <div style="display:flex;gap:10px;align-items:center"><StoryLabel label={a.data.label} /><span class="meta">{a.data.league}</span></div>
+              <span class="t">{a.data.title}</span>
+              <span class="d">{a.data.standfirst}</span>
+              <span class="when">{ago(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      ) : <p class="standfirst">Nothing here yet. The first {s.title.toLowerCase()} land on 4 January 2027.</p>}
+    </section>
+  </div>
+</Base>

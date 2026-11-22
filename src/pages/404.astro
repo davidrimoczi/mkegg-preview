@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
+---
+<Base title="Page not found" ticker={false}>
+  <div class="page">
+    <span class="eyebrow">404</span>
+    <h1>This page doesn't exist.</h1>
+    <p class="standfirst">It may have moved, or the link is wrong.</p>
+    <p style="margin-top:28px"><a class="btn btn-primary" href={url('/')}>Back to M/KE</a></p>
+  </div>
+</Base>

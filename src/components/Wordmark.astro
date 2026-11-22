@@ -1,0 +1,22 @@
+---
+// The M/KE wordmark, from David's Illustrator master (header_*_transparent.svg),
+// cropped to the art. Letters take the text colour (Bone on dark, Obsidian on light);
+// the slash always keeps the brand gradient. Never redraw or retype it.
+interface Props { height?: number; class?: string; title?: string }
+const { height = 32, class: cls = '', title = 'M/KE' } = Astro.props;
+const gid = 'mke-slash-' + Math.random().toString(36).slice(2, 8);
+const width = Math.round(height * (551.31 / 184.22));
+---
+<svg class={`wordmark ${cls}`} viewBox="343.13 111.23 551.31 184.22" width={width} height={height} role="img" aria-label={title} xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id={gid} x1="561.68" y1="269.35" x2="561.04" y2="141.17" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8a6f34" />
+      <stop offset=".45" stop-color="#ad8d35" />
+      <stop offset="1" stop-color="#d4af37" />
+    </linearGradient>
+  </defs>
+  <polygon fill={`url(#${gid})`} points="497.26 295.45 589.14 111.23 625.44 111.23 533.57 295.45 497.26 295.45" />
+  <polygon fill="currentColor" points="773.19 263.97 773.19 142.72 892.59 142.72 892.59 173.26 805.84 173.26 805.84 190.01 888.96 190.01 888.96 215.56 805.84 215.56 805.84 233.42 894.44 233.42 894.44 263.97 773.19 263.97" />
+  <polygon fill="currentColor" points="488.45 142.72 433.16 218.44 377.01 142.72 343.13 142.72 343.13 263.97 375.78 263.97 375.78 194.31 422.8 257.31 444.37 257.31 489.73 194.94 489.73 263.97 497.81 263.97 522.38 215.55 522.38 142.72 488.45 142.72" />
+  <polygon fill="currentColor" points="672.69 202.34 758.96 142.72 704.85 142.72 639.39 187.01 635.65 187.01 635.65 142.72 618.9 142.72 602.99 174.05 602.99 263.97 635.65 263.97 635.65 217.56 639.42 217.56 706.92 263.97 760.73 263.97 672.69 202.34" />
+</svg>

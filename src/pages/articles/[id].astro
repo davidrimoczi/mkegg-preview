@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import StoryLabel from '../../components/StoryLabel.astro';
+import Picture from '../../components/Picture.astro';
+import { render } from 'astro:content';
+import { articles, articleUrl, url, fmtDate, type Article } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const all = await articles();
+  return all.map((a) => ({ params: { id: a.id }, props: { article: a, all } }));
+}
+const { article, all } = Astro.props as { article: Article; all: Article[] };
+const { Content } = await render(article);
+const d = article.data;
+const next = all.filter((a) => a.id !== article.id).slice(0, 3);
+const section = { News: 'news', Feature: 'features', Interview: 'interviews', Analysis: 'analysis', Opinion: 'analysis' }[d.kind];
+---
+<Base title={d.title} description={d.standfirst} image={d.image} ticker={false}>
+  <div class="article-main" data-reading>
+    <article class="article">
+      <div class="crumbs">
+        <a href={url(d.league === 'LEC' ? '/lec/' : '/')}>{d.league}</a><span aria-hidden="true">/</span><a href={url(`/${section}/`)}>{d.kind}</a>
+      </div>
+      <h1>{d.title}</h1>
+      <p class="standfirst" style="font-size:clamp(18px,1.8vw,22px)">{d.standfirst}</p>
+      <div class="article-bar">
+        <div class="who">
+          <b>By {d.author}</b>
+          <span class="when">{fmtDate(d.date)}{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <StoryLabel label={d.label} />
+          <button class="lamp" type="button" data-lamp aria-pressed="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle class="glow" cx="12" cy="9" r="9" /><path class="bulb" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" stroke-width="1.6" stroke-linejoin="round" /></svg>
+            <span class="on-label">Reading light</span><span class="off-label">Light off</span>
+          </button>
+        </div>
+      </div>
+      <Picture class="hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" eager />
+      {d.imageCredit && <p class="credit">Photo: {d.imageCredit}</p>}
+      <div class="prose"><Content /></div>
+    </article>
+    {next.length > 0 && (
+      <section class="more" aria-labelledby="next-h">
+        <h2 id="next-h" class="eyebrow" style="color:var(--ink)">Read next</h2>
+        <div class="cards" style="margin-top:24px">
+          {next.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <span class="meta" style="color:var(--accent-text)">{a.data.kind}</span>
+              <span class="t" style="font-size:20px">{a.data.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+  <script is:inline>
+    (function () {
+      var main = document.querySelector('[data-reading]');
+      var btn = document.querySelector('[data-lamp]');
+      var set = function (on) {
+        main.classList.toggle('lit', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        try { localStorage.setItem('mke-reading-light', on ? '1' : '0'); } catch (e) {}
+      };
+      try { if (localStorage.getItem('mke-reading-light') === '1') main.classList.add('lit'), btn.setAttribute('aria-pressed', 'true'); } catch (e) {}
+      btn.addEventListener('click', function () { set(!main.classList.contains('lit')); });
+    })();
+  </script>
+</Base>

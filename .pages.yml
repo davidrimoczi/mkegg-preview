@@ -1,0 +1,80 @@
+# Pages CMS editor configuration (https://pagescms.org)
+# Log in at app.pagescms.org with GitHub, open this repository, and "Articles" appears.
+
+media:
+  input: public/media
+  output: /media
+
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: src/content/articles
+    filename: "{primary}.md"
+    view:
+      fields: [title, kind, label, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Headline
+        type: string
+        required: true
+      - name: standfirst
+        label: Standfirst (one or two sentences under the headline)
+        type: text
+        required: true
+      - name: kind
+        label: Kind of story
+        type: select
+        required: true
+        default: News
+        options:
+          values: [News, Feature, Interview, Analysis, Opinion]
+      - name: label
+        label: Story label (how solid the reporting is)
+        type: select
+        options:
+          values: [Confirmed, Report, Opinion, Rumour]
+      - name: league
+        label: League
+        type: select
+        default: LEC
+        options:
+          values: [LEC, LCK, LPL, LCS, International, Other]
+      - name: author
+        label: Author
+        type: string
+        default: David
+      - name: date
+        label: Publish date
+        type: date
+        required: true
+        options:
+          time: true
+      - name: readTime
+        label: Read time (minutes)
+        type: number
+      - name: image
+        label: Lead photo
+        type: image
+      - name: imageAlt
+        label: Photo description (for screen readers)
+        type: string
+      - name: imageCredit
+        label: Photo credit
+        type: string
+      - name: featured
+        label: Lead story on the homepage
+        type: boolean
+        default: false
+      - name: draft
+        label: Draft (only visible on the preview site)
+        type: boolean
+        default: true
+      - name: body
+        label: Article
+        type: rich-text
