@@ -23,12 +23,11 @@ const isInternational = league.badge === 'INT';
       <div style="display:flex;flex-direction:column;gap:22px">
         <span class="eyebrow">{league.full} · {league.status}</span>
         <h1>{league.name} <em>2027.</em></h1>
-        {league.start && (
-          <div class="tick-cd hub-cd" data-countdown={league.start.toISOString()} data-done={`${league.name} is live`}>
-            <span data-cd-label>Starts in</span>
-            <span class="mini" aria-hidden="true"><b data-u="d">--</b>d</span><span class="mini" aria-hidden="true"><b data-u="h">--</b>h</span><span class="mini" aria-hidden="true"><b data-u="m">--</b>m</span>
-          </div>
-        )}
+        <div class="tick-cd hub-cd" data-countdown={league.start?.toISOString()} data-done={`${league.name} is live`}>
+          <span data-cd-label>Starts in</span>
+          <span class="mini" aria-hidden="true"><b data-u="d">00</b>d</span><span class="mini" aria-hidden="true"><b data-u="h">00</b>h</span><span class="mini" aria-hidden="true"><b data-u="m">00</b>m</span>
+          {!league.start && <span class="tba">Date TBA</span>}
+        </div>
         <p class="standfirst">{league.blurb}</p>
         {preview && <a class="btn btn-primary" style="align-self:flex-start" href={articleUrl(preview)}>Read the latest</a>}
       </div>

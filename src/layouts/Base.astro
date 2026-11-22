@@ -75,7 +75,7 @@ const nav = [
   </footer>
   {IS_PREVIEW && <div class="preview-flag">Preview · not live</div>}
   <script is:inline>
-    document.querySelectorAll('[data-countdown]').forEach(function (el) {
+    document.querySelectorAll('[data-countdown]:not([data-countdown=""])').forEach(function (el) {
       var target = new Date(el.dataset.countdown).valueOf();
       var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
       var tick = function () {
