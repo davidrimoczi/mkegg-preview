@@ -12,6 +12,8 @@ readTime: 12
 image: /media/55540157118_62e81ab584_k.jpg
 tags:
   - lec
+  - mkoi
+  - interview
 featured: true
 draft: true
 ---
