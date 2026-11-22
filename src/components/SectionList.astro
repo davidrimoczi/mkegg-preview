@@ -4,9 +4,9 @@ import Base from '../layouts/Base.astro';
 import Picture from './Picture.astro';
 import StoryLabel from './StoryLabel.astro';
 import { articles, articleUrl, ago } from '../lib/site';
-interface Props { title: string; kinds?: string[]; featured?: boolean; intro?: string; active?: string }
-const { title, kinds, featured = false, intro, active } = Astro.props;
-const list = (await articles()).filter((a) => (!kinds || kinds.includes(a.data.kind)) && (!featured || a.data.featured));
+interface Props { title: string; kinds?: string[]; featured?: boolean; league?: string; intro?: string; active?: string }
+const { title, kinds, featured = false, league, intro, active } = Astro.props;
+const list = (await articles()).filter((a) => (!kinds || kinds.includes(a.data.kind)) && (!featured || a.data.featured) && (!league || a.data.league === league));
 ---
 <Base title={title} active={active}>
   <div class="wrap">
@@ -24,7 +24,7 @@ const list = (await articles()).filter((a) => (!kinds || kinds.includes(a.data.k
             </a>
           ))}
         </div>
-      ) : <p class="standfirst">Nothing here yet. The first {title.toLowerCase()} land on 4 January 2027.</p>}
+      ) : <p class="standfirst">Nothing here yet. The first stories land on 4 January 2027.</p>}
     </section>
   </div>
 </Base>

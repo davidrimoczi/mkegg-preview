@@ -1,0 +1,11 @@
+---
+// Every article for one competition: /lec/articles/, /lck/articles/, ...
+import SectionList from '../../components/SectionList.astro';
+import { LEAGUES, type League } from '../../data/leagues';
+
+export function getStaticPaths() {
+  return LEAGUES.map((league) => ({ params: { league: league.slug }, props: { league } }));
+}
+const { league } = Astro.props as { league: League };
+---
+<SectionList title={`${league.name} articles`} league={league.name} intro={`Everything we've published on the ${league.full}, newest first.`} />

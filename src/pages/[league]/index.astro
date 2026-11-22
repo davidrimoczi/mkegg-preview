@@ -51,10 +51,10 @@ const isInternational = league.badge === 'INT';
     </section>
 
     <section class="section" aria-labelledby="hub-news">
-      <div class="section-head"><h2 id="hub-news">{league.name} news</h2></div>
+      <div class="section-head"><h2 id="hub-news">{league.name} news</h2>{stories.length > 0 && <a class="see-all" href={url(`/${league.slug}/articles/`)}>All {league.name} articles<svg class="arr" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5"/></svg></a>}</div>
       {stories.length ? (
         <div class="cards cards-4">
-          {stories.slice(0, 12).map((a) => (
+          {stories.slice(0, 8).map((a) => (
             <a class="card" href={articleUrl(a)}>
               <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" sizes="(max-width: 900px) 100vw, 400px" />
               <span class="meta" style="color:var(--accent-text)">{a.data.label ?? a.data.kind}</span>
