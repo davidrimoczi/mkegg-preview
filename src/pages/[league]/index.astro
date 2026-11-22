@@ -10,7 +10,6 @@ export function getStaticPaths() {
 }
 const { league } = Astro.props as { league: League };
 const stories = (await articles()).filter((a) => a.data.league === league.name);
-const preview = stories.find((a) => a.data.featured) ?? stories[0];
 const isInternational = league.badge === 'INT';
 ---
 <Base title={league.name} description={`${league.full}: news, interviews, schedule and standings from M/KE.`}>
@@ -28,8 +27,6 @@ const isInternational = league.badge === 'INT';
           <span class="mini" aria-hidden="true"><b data-u="d">00</b>d</span><span class="mini" aria-hidden="true"><b data-u="h">00</b>h</span><span class="mini" aria-hidden="true"><b data-u="m">00</b>m</span>
           {!league.start && <span class="tba">Date TBA</span>}
         </div>
-        <p class="standfirst">{league.blurb}</p>
-        {preview && <a class="btn btn-primary" style="align-self:flex-start" href={articleUrl(preview)}>Read the latest</a>}
       </div>
       <div style="display:flex;flex-direction:column;gap:20px">
         <div class="panel">
