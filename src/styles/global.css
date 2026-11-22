@@ -306,6 +306,22 @@ body:has(.article-main) .site-footer { margin-top: 0; }
   .row .when { grid-column: auto; margin-top: 0; }
 }
 
+
+/* Hover lift on News, Interviews and Featured (not Explore all) */
+.pop .compact a, .pop .card, .pop .feat-now { transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .45s var(--ease); }
+.pop .ph img { transition: transform .7s var(--ease), filter .45s var(--ease); }
+.pop .ph { transition: box-shadow .45s var(--ease); }
+.pop .t { transition: color .3s var(--ease); }
+@media (hover: hover) {
+  .pop .compact a:hover, .pop .card:hover, .pop .feat-now:hover { transform: translateY(-4px); }
+  .pop a:hover .ph { box-shadow: 0 14px 32px -12px rgba(0, 0, 0, .55), 0 0 0 1px var(--line-gold); }
+  .pop a:hover .ph img { transform: scale(1.04); filter: brightness(1.06); }
+  .pop a:hover .t { color: var(--accent-text); }
+  .pop .feat-now:hover { box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .6); border-color: var(--gold); }
+  .pop .feat-now:hover .ph { box-shadow: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
+  .pop a:hover, .pop a:hover .ph img { transform: none !important; }
 }

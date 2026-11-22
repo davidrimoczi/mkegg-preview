@@ -60,7 +60,7 @@ const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'inter
     </section>
 
     {news.length > 0 && (
-      <section class="section" aria-labelledby="news-h">
+      <section class="section pop" aria-labelledby="news-h">
         <div class="section-head">
           <div><h2 id="news-h">News</h2><p class="sec-intro">The latest from the LEC and beyond, as it happens.</p></div>
           <a href={url('/news/')}>All news /</a>
@@ -77,7 +77,7 @@ const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'inter
     )}
 
     {interviews.length > 0 && (
-      <section class="section" aria-labelledby="int-h">
+      <section class="section pop" aria-labelledby="int-h">
         <div class="section-head">
           <div><h2 id="int-h">Interviews</h2><p class="sec-intro">Players, coaches and creators, in their own words.</p></div>
           <a href={url('/interviews/')}>All interviews /</a>
@@ -95,7 +95,7 @@ const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'inter
     )}
 
     {featured.length > 0 && (
-      <section class="section" aria-labelledby="feat-h">
+      <section class="section pop" aria-labelledby="feat-h">
         <div class="section-head">
           <div><h2 id="feat-h">Featured</h2><p class="sec-intro">Our biggest stories: every piece that has led the front page.</p></div>
           <a href={url('/featured/')}>All featured /</a>
