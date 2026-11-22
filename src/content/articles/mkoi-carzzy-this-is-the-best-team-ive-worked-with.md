@@ -1,7 +1,6 @@
 ---
-title: "MKOI Carzzy: \"This is the best team I've worked with\""
-standfirst: We had the chance to talk exclusively with MKOI's newest addition,
-  Carzzy, who joins the Spanish organization after 6 seasons with Team Vitality.
+title: Test
+standfirst: Test
 kind: Interview
 label: None
 league: LEC
