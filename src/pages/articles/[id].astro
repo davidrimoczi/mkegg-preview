@@ -59,6 +59,11 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
           <span class="when"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
           {d.updated && <span class="when">Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></span>}
         </div>
+        {d.tags.length > 0 && (
+          <nav class="tags tags-inline" aria-label="Tags">
+            {d.tags.map((t) => <a class="tag" href={tagUrl(t)} rel="tag">{t}</a>)}
+          </nav>
+        )}
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
           <StoryLabel label={d.label} />
           <button class="lamp" type="button" data-lamp aria-pressed="false">
@@ -70,11 +75,7 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
       <Picture class="hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" eager />
       {d.imageCredit && <p class="credit">Photo: {d.imageCredit}</p>}
       <div class="prose"><Content /></div>
-      {d.tags.length > 0 && (
-        <nav class="tags" aria-label="Tags">
-          {d.tags.map((t) => <a class="tag" href={tagUrl(t)} rel="tag">{t}</a>)}
-        </nav>
-      )}
+
     </article>
     {next.length > 0 && (
       <section class="more" aria-labelledby="next-h">

@@ -212,6 +212,9 @@ body:has(.article-main) .site-footer { margin-top: 0; }
 .tag:hover { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
 .tag small { margin-left: 8px; color: var(--ink-muted); font-weight: 700; }
 .tag:hover small { color: var(--obsidian); }
+.tags-inline { width: auto; max-width: none; margin: 0 auto 0 8px; gap: 6px; }
+.tags-inline .tag { --c: 5px; height: 26px; padding: 0 11px; font-size: 10.5px; }
+@media (max-width: 600px) { .tags-inline { margin: 0; flex-basis: 100%; } }
 .more { max-width: 1040px; margin: 80px auto 0; padding-top: 24px; border-top: 2px solid var(--gold); }
 
 /* ---------- Simple pages ---------- */
