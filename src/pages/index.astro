@@ -3,13 +3,19 @@ import Base from '../layouts/Base.astro';
 import StoryLabel from '../components/StoryLabel.astro';
 import Picture from '../components/Picture.astro';
 import LeagueList from '../components/LeagueList.astro';
-import { articles, articleUrl, url, ago } from '../lib/site';
+import { articles, articleUrl, url, ago, fmtDate } from '../lib/site';
 
 const all = await articles();
 const lead = all.find((a) => a.data.featured) ?? all[0];
 const rest = all.filter((a) => a !== lead);
 const latest = rest.slice(0, 4);
-const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).slice(0, 3);
+const news = rest.filter((a) => a.data.kind === 'News').slice(0, 6);
+const interviews = rest.filter((a) => a.data.kind === 'Interview').slice(0, 4);
+// Every article ticked "Featured" stays here after a newer one takes the lead.
+const featured = all.filter((a) => a.data.featured);
+const nowLeading = featured[0] === lead ? lead : undefined;
+const pastFeatured = featured.filter((a) => a !== nowLeading).slice(0, 4);
+const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'interviews' : 'features');
 ---
 <Base>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify({
@@ -53,18 +59,95 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
       </aside>
     </section>
 
+    {news.length > 0 && (
+      <section class="section" aria-labelledby="news-h">
+        <div class="section-head">
+          <div><h2 id="news-h">News</h2><p class="sec-intro">The latest from the LEC and beyond, as it happens.</p></div>
+          <a href={url('/news/')}>All news /</a>
+        </div>
+        <div class="compact">
+          {news.map((a) => (
+            <a href={articleUrl(a)}>
+              <Picture src={a.data.image} alt="" ratio="3 / 2" sizes="120px" />
+              <span><span class="t">{a.data.title}</span><span class="when">{a.data.league} · {ago(a.data.date)}</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     {interviews.length > 0 && (
       <section class="section" aria-labelledby="int-h">
-        <div class="section-head"><h2 id="int-h">Interviews</h2><a href={url('/interviews/')}>All interviews /</a></div>
-        <div class="cards">
+        <div class="section-head">
+          <div><h2 id="int-h">Interviews</h2><p class="sec-intro">Players, coaches and creators, in their own words.</p></div>
+          <a href={url('/interviews/')}>All interviews /</a>
+        </div>
+        <div class="cards cards-4">
           {interviews.map((a) => (
             <a class="card" href={articleUrl(a)}>
-              <Picture src={a.data.image} alt={a.data.imageAlt} note="Portrait" ratio="4 / 3" sizes="(max-width: 900px) 100vw, 400px" />
-              <span class="meta">{a.data.league}</span>
+              <Picture src={a.data.image} alt={a.data.imageAlt} note="Portrait" ratio="4 / 5" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 300px" />
+              <span class="meta gold">Interview · {a.data.league}</span>
               <span class="t">{a.data.title}</span>
             </a>
           ))}
         </div>
+      </section>
+    )}
+
+    {featured.length > 0 && (
+      <section class="section" aria-labelledby="feat-h">
+        <div class="section-head">
+          <div><h2 id="feat-h">Featured</h2><p class="sec-intro">Our biggest stories: every piece that has led the front page.</p></div>
+          <a href={url('/featured/')}>All featured /</a>
+        </div>
+        <div class="feat-grid">
+          {nowLeading && (
+            <a class="feat-now" href={articleUrl(nowLeading)}>
+              <Picture src={nowLeading.data.image} alt={nowLeading.data.imageAlt} ratio="4 / 3" sizes="(max-width: 900px) 100vw, 480px" />
+              <span class="feat-copy">
+                <span class="meta gold">{nowLeading.data.kind} · Now leading</span>
+                <span class="t">{nowLeading.data.title}</span>
+                <span class="d">{nowLeading.data.standfirst}</span>
+              </span>
+            </a>
+          )}
+          {pastFeatured.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" sizes="(max-width: 900px) 100vw, 400px" />
+              <span class="meta">{a.data.kind} · {ago(a.data.date)}</span>
+              <span class="t">{a.data.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {all.length > 0 && (
+      <section class="section" aria-labelledby="all-h" data-explore>
+        <div class="section-head">
+          <div><h2 id="all-h">Explore all articles</h2><p class="sec-intro">Everything we've published, newest first.</p></div>
+          <div class="filters" role="group" aria-label="Show">
+            <button type="button" data-f="all" aria-pressed="true">All</button>
+            <button type="button" data-f="news" aria-pressed="false">News</button>
+            <button type="button" data-f="interviews" aria-pressed="false">Interviews</button>
+            <button type="button" data-f="features" aria-pressed="false">Features</button>
+          </div>
+        </div>
+        <div class="rows">
+          {all.map((a) => (
+            <a class="row" href={articleUrl(a)} data-g={group(a.data.kind)}>
+              <Picture src={a.data.image} alt="" ratio="3 / 2" sizes="(max-width: 600px) 100vw, 220px" />
+              <span class="row-copy">
+                <span class="meta">{a.data.league} · {a.data.kind}</span>
+                <span class="t">{a.data.title}</span>
+                <span class="d">{a.data.standfirst}</span>
+              </span>
+              <span class="when">{fmtDate(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+        <p class="empty when" hidden>Nothing in this category yet.</p>
+        <div class="more-wrap"><button type="button" class="btn btn-ghost" data-more hidden>Load more articles</button></div>
       </section>
     )}
 
@@ -77,4 +160,29 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
       <a class="btn btn-primary" href="https://x.com/mkeggcom" rel="noopener">Follow @mkeggcom</a>
     </section>
   </div>
+  <script>
+    // Explore all: show 10 at a time, filter by kind. Without JavaScript every article is listed.
+    const box = document.querySelector<HTMLElement>('[data-explore]');
+    if (box) {
+      const rows = [...box.querySelectorAll<HTMLElement>('.row')];
+      const more = box.querySelector<HTMLButtonElement>('[data-more]')!;
+      const empty = box.querySelector<HTMLElement>('.empty')!;
+      const STEP = 10;
+      let f = 'all', shown = STEP;
+      const draw = () => {
+        const match = rows.filter((r) => f === 'all' || r.dataset.g === f);
+        rows.forEach((r) => (r.hidden = true));
+        match.slice(0, shown).forEach((r) => (r.hidden = false));
+        more.hidden = match.length <= shown;
+        empty.hidden = match.length > 0;
+      };
+      box.querySelectorAll<HTMLButtonElement>('[data-f]').forEach((b) => b.addEventListener('click', () => {
+        f = b.dataset.f!; shown = STEP;
+        box.querySelectorAll('[data-f]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        draw();
+      }));
+      more.addEventListener('click', () => { shown += STEP; draw(); });
+      draw();
+    }
+  </script>
 </Base>

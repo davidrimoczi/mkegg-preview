@@ -78,7 +78,7 @@ content:
         type: string
         list: true
       - name: featured
-        label: Lead story on the homepage
+        label: Featured (the newest featured article leads the homepage; leave it ticked so it stays in the Featured section)
         type: boolean
         default: false
       - name: draft

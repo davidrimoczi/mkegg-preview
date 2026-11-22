@@ -4,14 +4,14 @@ import Base from '../layouts/Base.astro';
 import Picture from './Picture.astro';
 import StoryLabel from './StoryLabel.astro';
 import { articles, articleUrl, ago } from '../lib/site';
-interface Props { title: string; kinds: string[]; active?: string }
-const { title, kinds, active } = Astro.props;
-const list = (await articles()).filter((a) => kinds.includes(a.data.kind));
+interface Props { title: string; kinds?: string[]; featured?: boolean; intro?: string; active?: string }
+const { title, kinds, featured = false, intro, active } = Astro.props;
+const list = (await articles()).filter((a) => (!kinds || kinds.includes(a.data.kind)) && (!featured || a.data.featured));
 ---
 <Base title={title} active={active}>
   <div class="wrap">
     <section class="section" style="padding-top:48px">
-      <div class="section-head"><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">{title}</h1></div>
+      <div class="section-head"><div><h1 style="margin:0;font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-.045em">{title}</h1>{intro && <p class="sec-intro">{intro}</p>}</div></div>
       {list.length ? (
         <div class="cards">
           {list.map((a) => (
