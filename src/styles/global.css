@@ -321,6 +321,12 @@ body:has(.article-main) .site-footer { margin-top: 0; }
   .pop .feat-now:hover .ph { box-shadow: none; }
 }
 
+
+/* "All news →" links */
+.see-all { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.see-all .arr { flex: none; transition: transform .35s var(--ease); }
+.see-all:hover .arr { transform: translateX(5px); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .pop a:hover, .pop a:hover .ph img { transform: none !important; }
