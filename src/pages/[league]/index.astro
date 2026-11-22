@@ -2,7 +2,6 @@
 // One hub page per competition: /lec/, /lck/, /lpl/, /lcs/, /first-stand/, /msi/, /worlds/
 import Base from '../../layouts/Base.astro';
 import Picture from '../../components/Picture.astro';
-import Countdown from '../../components/Countdown.astro';
 import { LEAGUES, type League } from '../../data/leagues';
 import { articles, articleUrl, url, ago } from '../../lib/site';
 
@@ -45,8 +44,6 @@ const isInternational = league.badge === 'INT';
         </div>
       </div>
     </section>
-
-    {league.start && <Countdown to={league.start} label={`${league.name} starts in`} done={`${league.name} is live`} />}
 
     <section class="section" aria-labelledby="hub-news">
       <div class="section-head"><h2 id="hub-news">{league.name} news</h2></div>

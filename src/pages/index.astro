@@ -2,9 +2,8 @@
 import Base from '../layouts/Base.astro';
 import StoryLabel from '../components/StoryLabel.astro';
 import Picture from '../components/Picture.astro';
-import Countdown from '../components/Countdown.astro';
 import LeagueList from '../components/LeagueList.astro';
-import { articles, articleUrl, url, ago, LEC_WINTER_START } from '../lib/site';
+import { articles, articleUrl, url, ago } from '../lib/site';
 
 const all = await articles();
 const lead = all.find((a) => a.data.featured) ?? all[0];
@@ -44,8 +43,6 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
         )) : <p class="when">More stories soon.</p>}
       </aside>
     </section>
-
-    <Countdown to={LEC_WINTER_START} label="LEC Winter 2027 starts in" done="LEC Winter 2027 is live" />
 
     {interviews.length > 0 && (
       <section class="section" aria-labelledby="int-h">

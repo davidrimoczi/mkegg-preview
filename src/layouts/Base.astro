@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Wordmark from '../components/Wordmark.astro';
-import { url, IS_PREVIEW } from '../lib/site';
+import { url, IS_PREVIEW, LEC_WINTER_START } from '../lib/site';
 
 interface Props { title?: string; description?: string; image?: string; active?: string; ticker?: boolean }
 const {
@@ -64,7 +64,11 @@ const nav = [
   {ticker && (
     <div class="ticker">
       <div class="wrap">
-        <a class="hot" href={url('/lec/')}>LEC Winter starts 15 January</a><i>/</i>
+        <a class="hot tick-cd" href={url('/lec/')} data-countdown={LEC_WINTER_START.toISOString()} data-done="LEC Winter is live">
+          <span data-cd-label>LEC Winter starts in</span>
+          <span class="mini" aria-hidden="true"><b data-u="d">--</b>d</span><span class="mini" aria-hidden="true"><b data-u="h">--</b>h</span><span class="mini" aria-hidden="true"><b data-u="m">--</b>m</span>
+          <span class="sr-only">15 January 2027</span>
+        </a><i>/</i>
         <a href={url('/interviews/')}>Interviews</a><i>/</i>
         <a href={url('/standards/')}>How we report</a>
       </div>
@@ -85,6 +89,20 @@ const nav = [
   </footer>
   {IS_PREVIEW && <div class="preview-flag">Preview · not live</div>}
   <script is:inline>
+    document.querySelectorAll('[data-countdown]').forEach(function (el) {
+      var target = new Date(el.dataset.countdown).valueOf();
+      var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+      var tick = function () {
+        var ms = target - Date.now();
+        if (ms <= 0) { el.querySelectorAll('.mini').forEach(function (m) { m.remove(); }); el.querySelector('[data-cd-label]').textContent = el.dataset.done; return; }
+        var s = Math.floor(ms / 1000);
+        el.querySelector('[data-u="d"]').textContent = pad(Math.floor(s / 86400));
+        el.querySelector('[data-u="h"]').textContent = pad(Math.floor(s % 86400 / 3600));
+        el.querySelector('[data-u="m"]').textContent = pad(Math.floor(s % 3600 / 60));
+        setTimeout(tick, 30000);
+      };
+      tick();
+    });
     document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
       b.addEventListener('click', function () {
         var root = document.documentElement;
