@@ -16,7 +16,7 @@ const articles = defineCollection({
     label: z.enum(['None', 'Confirmed', 'Report', 'Opinion', 'Rumour']).optional().nullable()
       .transform((v) => (v && v !== 'None' ? v : undefined)),
     league: z.enum(['LEC', 'LCK', 'LPL', 'LCS', 'First Stand', 'MSI', 'Worlds', 'Other']).default('LEC'),
-    author: z.string().default('David'),
+    author: z.string().default('Damilosk'),
     date: z.preprocess(toBudapestDate, z.date()),
     // Set only when a story changes meaningfully after publishing (shown as "Updated").
     updated: z.preprocess((v) => (v === '' || v == null ? undefined : toBudapestDate(v)), z.date().optional()),

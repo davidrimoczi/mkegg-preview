@@ -2,14 +2,14 @@
 // Author profile: who writes for M/KE, and everything they've published.
 import Base from '../../layouts/Base.astro';
 import Picture from '../../components/Picture.astro';
-import { AUTHORS, type Author } from '../../data/authors';
+import { AUTHORS, authorByName, type Author } from '../../data/authors';
 import { articles, articleUrl, url, ago } from '../../lib/site';
 
 export function getStaticPaths() {
   return AUTHORS.map((author) => ({ params: { slug: author.slug }, props: { author } }));
 }
 const { author } = Astro.props as { author: Author };
-const list = (await articles()).filter((a) => a.data.author.trim().toLowerCase() === author.name.toLowerCase());
+const list = (await articles()).filter((a) => authorByName(a.data.author)?.slug === author.slug);
 const ld = {
   '@context': 'https://schema.org', '@type': 'ProfilePage',
   mainEntity: { '@type': 'Person', name: author.name, jobTitle: author.role, description: author.bio,

@@ -1,3 +1,4 @@
+import { authorByName } from '../data/authors';
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { articles, url } from '../lib/site';
@@ -15,7 +16,7 @@ export async function GET(context: APIContext) {
       pubDate: a.data.date,
       link: url(`/articles/${a.id}/`),
       categories: [a.data.league, a.data.kind],
-      author: `contact@mkegg.com (${a.data.author})`,
+      author: `contact@mkegg.com (${authorByName(a.data.author)?.name ?? a.data.author})`,
     })),
     customData: '<language>en</language>',
   });

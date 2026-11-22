@@ -49,7 +49,7 @@ content:
       - name: author
         label: Author
         type: string
-        default: David
+        default: Damilosk
       - name: date
         label: Publish date
         type: date
