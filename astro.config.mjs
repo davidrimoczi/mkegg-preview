@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // The same source builds two sites:
 //  - production: https://mkegg.com (no base path)
@@ -13,4 +14,5 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   build: { format: 'directory' },
+  integrations: [sitemap()],
 });

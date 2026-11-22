@@ -16,7 +16,7 @@ const list = (await articles()).filter((a) => kinds.includes(a.data.kind));
         <div class="cards">
           {list.map((a) => (
             <a class="card" href={articleUrl(a)}>
-              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" />
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" sizes="(max-width: 900px) 100vw, 400px" />
               <div style="display:flex;gap:10px;align-items:center"><StoryLabel label={a.data.label} /><span class="meta">{a.data.league}</span></div>
               <span class="t">{a.data.title}</span>
               <span class="d">{a.data.standfirst}</span>

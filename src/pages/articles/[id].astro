@@ -5,6 +5,8 @@ import Picture from '../../components/Picture.astro';
 import { render } from 'astro:content';
 import { articles, articleUrl, url, fmtDate, type Article } from '../../lib/site';
 import { leagueByName } from '../../data/leagues';
+import { authorByName } from '../../data/authors';
+import { socialImage, mediaMeta } from '../../lib/media';
 
 export async function getStaticPaths() {
   const all = await articles();
@@ -15,9 +17,34 @@ const { Content } = await render(article);
 const d = article.data;
 const next = all.filter((a) => a.id !== article.id).slice(0, 3);
 const hub = leagueByName(d.league);
+const author = authorByName(d.author);
+const authorUrl = author ? url(`/authors/${author.slug}/`) : undefined;
+const og = await socialImage(d.image);
+const meta = await mediaMeta(d.image);
+const abs = (p: string) => new URL(p, Astro.site).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': d.kind === 'Opinion' ? 'OpinionNewsArticle' : d.kind === 'Analysis' ? 'AnalysisNewsArticle' : 'NewsArticle',
+  headline: d.title,
+  description: d.standfirst,
+  datePublished: d.date.toISOString(),
+  dateModified: (d.updated ?? d.date).toISOString(),
+  mainEntityOfPage: abs(articleUrl(article)),
+  image: og ? [abs(og)] : [abs(url('/brand/og-default.png'))],
+  author: [{ '@type': 'Person', name: d.author, ...(authorUrl ? { url: abs(authorUrl) } : {}) }],
+  publisher: { '@type': 'NewsMediaOrganization', name: 'M/KE', url: abs(url('/')), logo: { '@type': 'ImageObject', url: abs(url('/brand/og-default.png')) } },
+  articleSection: d.league,
+  isAccessibleForFree: true,
+};
 const section = { News: 'news', Feature: 'features', Interview: 'interviews', Analysis: 'analysis', Opinion: 'analysis' }[d.kind];
 ---
-<Base title={d.title} description={d.standfirst} image={d.image}>
+<Base title={d.title} description={d.standfirst} image={og} type="article">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <meta property="article:published_time" content={d.date.toISOString()} />
+    <meta property="article:modified_time" content={(d.updated ?? d.date).toISOString()} />
+    <meta property="article:section" content={d.league} />
+  </Fragment>
   <div class="article-main" data-reading>
     <article class="article">
       <div class="crumbs">
@@ -27,8 +54,9 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
       <p class="standfirst" style="font-size:clamp(18px,1.8vw,22px)">{d.standfirst}</p>
       <div class="article-bar">
         <div class="who">
-          <b>By {d.author}</b>
-          <span class="when">{fmtDate(d.date)}{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
+          <b>By {authorUrl ? <a href={authorUrl} rel="author">{d.author}</a> : d.author}</b>
+          <span class="when"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
+          {d.updated && <span class="when">Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></span>}
         </div>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
           <StoryLabel label={d.label} />

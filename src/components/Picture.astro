@@ -1,12 +1,19 @@
 ---
-// An article image, or a branded placeholder until real photos exist.
+// An article photo (automatically resized and compressed), or a branded placeholder until one exists.
 import { url } from '../lib/site';
-interface Props { src?: string; alt?: string; note?: string; ratio?: string; class?: string; eager?: boolean }
-const { src, alt = '', note = 'Photo', ratio = '16 / 9', class: cls = '', eager = false } = Astro.props;
-const resolved = src && !/^https?:/.test(src) ? url(src) : src;
+import { responsive } from '../lib/media';
+interface Props { src?: string; alt?: string; note?: string; ratio?: string; class?: string; eager?: boolean; sizes?: string }
+const { src, alt = '', note = 'Photo', ratio = '16 / 9', class: cls = '', eager = false, sizes = '(max-width: 900px) 100vw, 800px' } = Astro.props;
+const opt = await responsive(src);
+const fallback = src && !opt ? (/^https?:/.test(src) ? src : url(src)) : undefined;
 ---
 <div class={`ph ${cls}`} style={`aspect-ratio:${ratio}`}>
-  {resolved
-    ? <img src={resolved} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
-    : <span class="ph-note" aria-hidden="true">{note}</span>}
+  {opt ? (
+    <img src={opt.src} srcset={opt.srcSet.attribute} sizes={sizes} alt={alt} width={opt.attributes.width} height={opt.attributes.height}
+      loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} decoding="async" />
+  ) : fallback ? (
+    <img src={fallback} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  ) : (
+    <span class="ph-note" aria-hidden="true">{note}</span>
+  )}
 </div>

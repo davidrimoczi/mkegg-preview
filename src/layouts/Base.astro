@@ -3,16 +3,18 @@ import '../styles/global.css';
 import Wordmark from '../components/Wordmark.astro';
 import { url, IS_PREVIEW } from '../lib/site';
 
-interface Props { title?: string; description?: string; image?: string; active?: string }
+interface Props { title?: string; description?: string; image?: string; active?: string; type?: 'website' | 'article' }
 const {
   title,
   description = 'News. Interviews. Stories. Independent esports media, beyond the game.',
-  image = '/brand/og-default.png',
+  image,
+  type = 'website',
   active = '',
 } = Astro.props;
 const fullTitle = title ? `${title} · M/KE` : 'M/KE · Beyond the game.';
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(url(image), Astro.site);
+// `image` is a path that already includes the site base (e.g. from lib/media socialImage)
+const ogImage = new URL(image ?? url('/brand/og-default.png'), Astro.site);
 const nav = [
   { href: '/news/', label: 'News', key: 'news' },
   { href: '/interviews/', label: 'Interviews', key: 'interviews' },
@@ -36,6 +38,10 @@ const nav = [
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
   <meta property="og:url" content={canonical} />
+  <meta property="og:type" content={type} />
+  <link rel="alternate" type="application/rss+xml" title="M/KE" href={url('/rss.xml')} />
+  <link rel="sitemap" href={url('/sitemap-index.xml')} />
+  <slot name="head" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@mkeggcom" />
   <script is:inline>

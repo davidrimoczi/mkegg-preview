@@ -12,6 +12,16 @@ const latest = rest.slice(0, 4);
 const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).slice(0, 3);
 ---
 <Base>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'NewsMediaOrganization', '@id': new URL(url('/#org'), Astro.site).href, name: 'M/KE', url: new URL(url('/'), Astro.site).href,
+        logo: { '@type': 'ImageObject', url: new URL(url('/brand/og-default.png'), Astro.site).href },
+        email: 'contact@mkegg.com', sameAs: ['https://x.com/mkeggcom'],
+        publishingPrinciples: new URL(url('/standards/'), Astro.site).href },
+      { '@type': 'WebSite', name: 'M/KE', url: new URL(url('/'), Astro.site).href, publisher: { '@id': new URL(url('/#org'), Astro.site).href } },
+    ],
+  })} />
   <div class="wrap">
     <section class="home-grid">
       <LeagueList />
@@ -49,7 +59,7 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
         <div class="cards">
           {interviews.map((a) => (
             <a class="card" href={articleUrl(a)}>
-              <Picture src={a.data.image} alt={a.data.imageAlt} note="Portrait" ratio="4 / 3" />
+              <Picture src={a.data.image} alt={a.data.imageAlt} note="Portrait" ratio="4 / 3" sizes="(max-width: 900px) 100vw, 400px" />
               <span class="meta">{a.data.league}</span>
               <span class="t">{a.data.title}</span>
             </a>

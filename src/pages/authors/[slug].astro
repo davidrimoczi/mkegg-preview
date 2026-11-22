@@ -1,0 +1,47 @@
+---
+// Author profile: who writes for M/KE, and everything they've published.
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import { AUTHORS, type Author } from '../../data/authors';
+import { articles, articleUrl, url, ago } from '../../lib/site';
+
+export function getStaticPaths() {
+  return AUTHORS.map((author) => ({ params: { slug: author.slug }, props: { author } }));
+}
+const { author } = Astro.props as { author: Author };
+const list = (await articles()).filter((a) => a.data.author.trim().toLowerCase() === author.name.toLowerCase());
+const ld = {
+  '@context': 'https://schema.org', '@type': 'ProfilePage',
+  mainEntity: { '@type': 'Person', name: author.name, jobTitle: author.role, description: author.bio,
+    worksFor: { '@type': 'NewsMediaOrganization', name: 'M/KE', url: new URL(url('/'), Astro.site).href },
+    sameAs: author.links.filter((l) => l.href.startsWith('http')).map((l) => l.href) },
+};
+---
+<Base title={author.name} description={`${author.name}, ${author.role.toLowerCase()} at M/KE. ${author.bio}`}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <div class="wrap">
+    <section class="page" style="max-width:860px;margin:0;padding-inline:0">
+      <span class="eyebrow">{author.role}</span>
+      <h1>{author.name}</h1>
+      <p class="standfirst">{author.bio}</p>
+      <p style="display:flex;gap:18px;margin-top:20px" class="meta">
+        {author.links.map((l) => <a href={l.href} rel={l.href.startsWith('http') ? 'me noopener' : undefined} style="color:var(--accent-text)">{l.label} /</a>)}
+      </p>
+    </section>
+    <section class="section" style="padding-top:24px" aria-labelledby="by-h">
+      <div class="section-head"><h2 id="by-h">Latest by {author.name}</h2></div>
+      {list.length ? (
+        <div class="cards">
+          {list.map((a) => (
+            <a class="card" href={articleUrl(a)}>
+              <Picture src={a.data.image} alt={a.data.imageAlt} ratio="3 / 2" sizes="(max-width: 900px) 100vw, 400px" />
+              <span class="meta">{a.data.league} · {a.data.kind}</span>
+              <span class="t">{a.data.title}</span>
+              <span class="when">{ago(a.data.date)}</span>
+            </a>
+          ))}
+        </div>
+      ) : <p class="note">The first pieces land on 4 January 2027.</p>}
+    </section>
+  </div>
+</Base>

@@ -2,7 +2,7 @@
 # Log in at app.pagescms.org with GitHub, open this repository, and "Articles" appears.
 
 media:
-  input: public/media
+  input: src/assets/media
   output: /media
 
 content:
@@ -54,6 +54,11 @@ content:
         label: Publish date
         type: date
         required: true
+        options:
+          time: true
+      - name: updated
+        label: Updated (only for meaningful changes after publishing)
+        type: date
         options:
           time: true
       - name: readTime
