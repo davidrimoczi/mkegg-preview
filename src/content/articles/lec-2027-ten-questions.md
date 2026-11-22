@@ -2,7 +2,7 @@
 title: Ten questions before the LEC returns on 15 January
 standfirst: "[Sample article. Standfirst: one or two sentences on why this
   matters right now.]"
-kind: Feature
+kind: News
 label: None
 league: LEC
 author: David
