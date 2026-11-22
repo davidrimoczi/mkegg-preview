@@ -14,8 +14,9 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
 ---
 <Base>
   <div class="wrap">
-    {lead ? (
-      <section class="lead-grid">
+    <section class="home-grid">
+      <LeagueList />
+      {lead ? (
         <article class="lead">
           <a href={articleUrl(lead)}><Picture src={lead.data.image} alt={lead.data.imageAlt} note="Lead photo" eager /></a>
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
@@ -26,28 +27,23 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
           <p class="standfirst">{lead.data.standfirst}</p>
           <p class="byline">By {lead.data.author}</p>
         </article>
-        <aside class="latest" aria-labelledby="latest-h">
-          <h2 id="latest-h" class="eyebrow">Latest</h2>
-          {latest.length ? latest.map((a) => (
-            <a href={articleUrl(a)}>
-              <StoryLabel label={a.data.label ?? (a.data.kind === 'Opinion' ? 'Opinion' : undefined)} />
-              <span class="t">{a.data.title}</span>
-              <span class="when">{a.data.kind} · {ago(a.data.date)}</span>
-            </a>
-          )) : <p class="when">More stories soon.</p>}
-          <LeagueList />
-        </aside>
-      </section>
-    ) : (
-      <section class="lead-grid">
+      ) : (
         <div class="lead">
           <span class="eyebrow">Independent esports media</span>
           <h1>Beyond the <em>game.</em></h1>
           <p class="standfirst">News. Interviews. Stories. The first M/KE pieces land on 4 January 2027.</p>
         </div>
-        <aside class="latest"><LeagueList /></aside>
-      </section>
-    )}
+      )}
+      <aside class="latest" aria-labelledby="latest-h">
+        <h2 id="latest-h" class="eyebrow">Latest</h2>
+        {latest.length ? latest.map((a) => (
+          <a href={articleUrl(a)}>
+            <span class="t">{a.data.title}</span>
+            <span class="when"><StoryLabel label={a.data.label ?? (a.data.kind === 'Opinion' ? 'Opinion' : undefined)} /> {a.data.kind} · {ago(a.data.date)}</span>
+          </a>
+        )) : <p class="when">More stories soon.</p>}
+      </aside>
+    </section>
 
     <Countdown to={LEC_WINTER_START} label="LEC Winter 2027 starts in" done="LEC Winter 2027 is live" />
 
