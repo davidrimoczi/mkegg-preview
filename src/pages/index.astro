@@ -24,7 +24,6 @@ const interviews = all.filter((a) => a.data.kind === 'Interview' && a !== lead).
           </div>
           <h1><a href={articleUrl(lead)}>{lead.data.title}</a></h1>
           <p class="standfirst">{lead.data.standfirst}</p>
-          <p class="byline">By {lead.data.author}</p>
         </article>
       ) : (
         <div class="lead">
