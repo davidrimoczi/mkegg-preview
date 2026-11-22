@@ -56,29 +56,20 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
   </div>
   <script is:inline>
     (function () {
-      // The reading light is ON when the article reads on Bone.
-      // Dark mode: off by default (or the reader's saved choice). Light mode: already on.
-      var main = document.querySelector('[data-reading]');
+      // On articles the bulb is the site's light switch: on = light mode (Bone), off = dark.
+      // It and the header's sun/moon button always agree, and the choice carries across the site.
       var btn = document.querySelector('[data-lamp]');
       var root = document.documentElement;
-      var saved = function () { try { return localStorage.getItem('mke-reading-light') === '1'; } catch (e) { return false; } };
-      var on = null;
-      var paint = function () {
-        var light = root.dataset.theme === 'light';
-        main.classList.toggle('lit', on && !light);
-        main.classList.toggle('dim', !on && light);
-        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      };
-      var reset = function () { on = root.dataset.theme === 'light' ? true : saved(); paint(); };
-      reset();
+      var paint = function () { btn.setAttribute('aria-pressed', root.dataset.theme === 'light' ? 'true' : 'false'); };
+      paint();
       btn.addEventListener('click', function () {
-        on = !on;
-        // Only remember the choice made in dark mode; light mode always starts lit.
-        if (root.dataset.theme !== 'light') { try { localStorage.setItem('mke-reading-light', on ? '1' : '0'); } catch (e) {} }
-        paint();
+        var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        root.classList.add('fading');
+        root.dataset.theme = next;
+        try { localStorage.setItem('mke-theme', next); } catch (e) {}
+        setTimeout(function () { root.classList.remove('fading'); }, 800);
       });
-      // Follow the header's light/dark switch.
-      new MutationObserver(reset).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+      new MutationObserver(paint).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     })();
   </script>
 </Base>

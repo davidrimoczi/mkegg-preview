@@ -90,8 +90,11 @@ const nav = [
   <script is:inline>
     document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
       b.addEventListener('click', function () {
-        var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-        document.documentElement.dataset.theme = next;
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        root.classList.add('fading');
+        root.dataset.theme = next;
+        setTimeout(function () { root.classList.remove('fading'); }, 800);
         try { localStorage.setItem('mke-theme', next); } catch (e) {}
       });
     });
