@@ -1,8 +1,11 @@
 ---
+import LeagueBar from '../components/LeagueBar.astro';
+import { LEAGUES } from '../data/leagues';
 import '../styles/global.css';
 import Wordmark from '../components/Wordmark.astro';
 import { url, IS_PREVIEW } from '../lib/site';
 
+const leagueNow = LEAGUES.find((l) => Astro.url.pathname.split('/').filter(Boolean).includes(l.slug))?.slug;
 interface Props { title?: string; description?: string; image?: string; active?: string; type?: 'website' | 'article' }
 const {
   title,
@@ -66,6 +69,7 @@ const nav = [
       </div>
     </div>
   </header>
+  <LeagueBar current={leagueNow} />
   <main id="main"><slot /></main>
   <footer class="site-footer">
     <div class="wrap">

@@ -270,7 +270,8 @@ body:has(.article-main) .site-footer { margin-top: 0; }
 .league-bar li { flex: none; }
 .league-bar a { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 18px 0 10px; border: 1px solid var(--line-strong, var(--line)); border-radius: 999px; font-size: 14px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; transition: border-color .25s, background .25s, color .25s; }
 .league-bar a:hover { border-color: var(--gold); color: var(--ink); }
-.league-bar a[aria-current='page'] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.league-bar a[aria-current='page'] { border-color: var(--gold); background: var(--gold); color: var(--obsidian); }
+.league-bar a[aria-current='page'] img.mono { filter: brightness(0); }
 .league-bar img { width: 22px; height: 22px; object-fit: contain; }
 [data-theme='light'] .league-bar img.mono { filter: brightness(0); }
 .league-bar .pill-badge { font-size: 9px; font-weight: 900; letter-spacing: .08em; color: var(--accent-text); }

@@ -14,10 +14,6 @@ const isInternational = league.badge === 'INT';
 ---
 <Base title={league.name} description={`${league.full}: news, interviews, schedule and standings from M/KE.`}>
   <div class="wrap">
-    <nav class="league-tabs" aria-label="Leagues">
-      {LEAGUES.map((l) => <a href={url(`/${l.slug}/`)} aria-current={l.slug === league.slug ? 'page' : undefined}>{l.name.toUpperCase()}</a>)}
-    </nav>
-
     <section class="hub-hero">
       <div style="display:flex;flex-direction:column;gap:22px">
         <span class="eyebrow">{league.full} · {league.status}</span>
