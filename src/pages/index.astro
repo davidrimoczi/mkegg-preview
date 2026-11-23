@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import StoryLabel from '../components/StoryLabel.astro';
 import Picture from '../components/Picture.astro';
-import LeagueList from '../components/LeagueList.astro';
+import LeagueBar from '../components/LeagueBar.astro';
 import { articles, articleUrl, url, ago, fmtDate } from '../lib/site';
 
 const all = await articles();
@@ -28,9 +28,9 @@ const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'inter
       { '@type': 'WebSite', name: 'M/KE', url: new URL(url('/'), Astro.site).href, publisher: { '@id': new URL(url('/#org'), Astro.site).href } },
     ],
   })} />
+  <LeagueBar />
   <div class="wrap">
     <section class="home-grid">
-      <LeagueList />
       {lead ? (
         <article class="lead">
           <a href={articleUrl(lead)}><Picture src={lead.data.image} alt={lead.data.imageAlt} note="Lead photo" eager /></a>

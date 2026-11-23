@@ -1,0 +1,23 @@
+---
+// The league row under the header: one pill per competition (logo + name).
+import { LEAGUES } from '../data/leagues';
+import { url } from '../lib/site';
+interface Props { current?: string }
+const { current } = Astro.props;
+---
+<nav class="league-bar" aria-label="Leagues">
+  <div class="wrap">
+    <ul>
+      {LEAGUES.map((l) => (
+        <li>
+          <a href={url(`/${l.slug}/`)} aria-current={current === l.slug ? 'page' : undefined}>
+            {l.logo
+              ? <img src={url(l.logo)} alt="" width="22" height="22" class={l.mono ? 'mono' : undefined} decoding="async" />
+              : <span class="pill-badge" aria-hidden="true">{l.badge}</span>}
+            <span>{l.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
