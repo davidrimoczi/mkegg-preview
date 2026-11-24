@@ -97,11 +97,11 @@ content:
             label: Team logo (optional; square works best)
             type: image
           - name: logoWhite
-            label: Turn the logo white (tick this if the logo is dark and hard to see)
+            label: Turn the logo white in dark mode (tick this if the logo is dark and hard to see)
             type: boolean
             default: false
           - name: players
-            label: Rows (one per player, top to bottom)
+            label: Players (left to right)
             type: object
             list: true
             fields:
@@ -114,6 +114,9 @@ content:
               - name: realName
                 label: Real name (optional, shown small)
                 type: string
+              - name: photo
+                label: Player photo (optional; head-and-shoulders works best. Empty spots show a silhouette)
+                type: image
               - name: tag
                 label: Tag on the right (optional, e.g. New · from T1)
                 type: string
@@ -122,10 +125,10 @@ content:
                 type: boolean
                 default: false
           - name: footLabel
-            label: Bottom line label (e.g. Head coach; leave empty for no bottom line)
+            label: Coach label (e.g. Head coach; shown top right, leave empty to hide)
             type: string
           - name: footText
-            label: Bottom line text (e.g. cvMax)
+            label: Coach name (e.g. cvMax)
             type: string
       - name: draft
         label: Draft (only visible on the preview site)

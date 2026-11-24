@@ -10,7 +10,12 @@ const cards: string[] = [];
 for (const c of Astro.props.rosters) {
   const meta = await mediaMeta(c.logo ?? undefined);
   const logo = meta ? (await getImage({ src: meta, width: Math.min(96, meta.width), format: 'webp' })).src : undefined;
-  cards.push(rosterHtml(c, logo));
+  const photos: (string | undefined)[] = [];
+  for (const p of c.players) {
+    const pm = await mediaMeta(p.photo ?? undefined);
+    photos.push(pm ? (await getImage({ src: pm, width: Math.min(320, pm.width), format: 'webp', quality: 80 })).src : undefined);
+  }
+  cards.push(rosterHtml(c, logo, photos));
 }
 const marker = /<p>\s*\\?\[roster\\?\]\s*<\/p>/i;
 const rest: string[] = [];

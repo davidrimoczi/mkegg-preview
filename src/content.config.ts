@@ -38,6 +38,7 @@ const articles = defineCollection({
         role: z.string().nullable().optional(),
         name: z.string(),
         realName: z.string().nullable().optional(),
+        photo: z.string().nullable().optional(),
         tag: z.string().nullable().optional(),
         gold: z.boolean().nullable().optional(),
       })).nullable().optional().transform((p) => p ?? []),
