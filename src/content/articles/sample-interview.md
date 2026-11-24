@@ -40,9 +40,10 @@ rosters:
         photo: /media/DK_Smash_2026_Split_1.webp
         gold: false
       - role: Support
-        name: TBA
-        realName: To be announced
-        gold: false
+        name: Delight
+        realName: Yoo Hwan-joong
+        tag: New - from HLE
+        gold: true
     footLabel: Head coach
     footText: cvMax
 draft: true
