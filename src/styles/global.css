@@ -376,3 +376,14 @@ body:has(.article-main) .site-footer { margin-top: 0; }
   .prose .roster-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .roster-coach { font-size: 13px; }
 }
+
+/* Read next: small photo beside each headline */
+.next-card { display: flex; gap: 16px; align-items: flex-start; transition: transform .25s var(--ease); }
+.next-card:hover { transform: translateY(-3px); }
+.next-card .next-img { width: 128px; flex: none; overflow: hidden; }
+.next-card .next-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
+.next-card:hover .next-img img { transform: scale(1.04); }
+.next-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.next-card .t { font-size: 18px; line-height: 1.22; font-weight: 800; letter-spacing: -.02em; }
+.next-card:hover .t { color: var(--accent-text); }
+@media (max-width: 1000px) and (min-width: 641px) { .next-card { flex-direction: column; } .next-card .next-img { width: 100%; } }

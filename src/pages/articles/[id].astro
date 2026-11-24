@@ -84,9 +84,12 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
         <h2 id="next-h" class="eyebrow" style="color:var(--ink)">Read next</h2>
         <div class="cards" style="margin-top:24px">
           {next.map((a) => (
-            <a class="card" href={articleUrl(a)}>
-              <span class="meta" style="color:var(--accent-text)">{a.data.kind}</span>
-              <span class="t" style="font-size:20px">{a.data.title}</span>
+            <a class="next-card" href={articleUrl(a)}>
+              <Picture class="next-img" src={a.data.image} alt="" note="" ratio="4 / 3" sizes="140px" />
+              <span class="next-text">
+                <span class="meta" style="color:var(--accent-text)">{a.data.kind}</span>
+                <span class="t">{a.data.title}</span>
+              </span>
             </a>
           ))}
         </div>
