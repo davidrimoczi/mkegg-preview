@@ -12,7 +12,29 @@ tags:
   - Transfers
 featured: false
 rosters:
-  - src/content/teams/dplus-kia-2027.yml
+  - team: Dplus KIA
+    subtitle: LCK 2027 roster
+    players:
+      - role: Top
+        name: Doran
+        realName: Choi Hyeon-joon
+        tag: New · from T1
+        gold: true
+      - role: Jungle
+        name: Kanavi
+        realName: Seo Jin-hyeok
+        tag: New · from Hanwha Life
+        gold: true
+      - role: Mid
+        name: ShowMaker
+        realName: Heo Su
+      - role: ADC
+        name: Smash
+        realName: Shin Geum-jae
+      - role: Support
+        name: TBA
+    footLabel: Head coach
+    footText: cvMax
 draft: true
 ---
 
