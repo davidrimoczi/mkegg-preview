@@ -348,3 +348,29 @@ body:has(.article-main) .site-footer { margin-top: 0; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .pop a:hover, .pop a:hover .ph img { transform: none !important; }
 }
+
+/* Roster card inside articles (names only; photos can come later) */
+.prose .roster { margin: 2em -24px; padding: 0; background: linear-gradient(180deg, #171511, #0f0e0c); border: 1px solid rgba(212,175,55,.30); box-shadow: 0 30px 60px -30px rgba(212,175,55,.25); color: #f5f1e6; font-size: 16px; line-height: 1.3; }
+.roster-head { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(245,241,230,.10); }
+.roster-badge { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid rgba(245,241,230,.25); font-size: 13px; font-weight: 900; flex: none; }
+.roster-title { display: flex; flex-direction: column; gap: 3px; }
+.roster-title b { font-size: 20px; letter-spacing: -.02em; }
+.roster-title span { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #d4af37; }
+.prose .roster-list { list-style: none; margin: 0; padding: 4px 22px 6px; }
+.roster-list li { display: grid; grid-template-columns: 96px 1fr auto; align-items: baseline; gap: 16px; padding: 15px 0; margin: 0; }
+.roster-list li + li { border-top: 1px solid rgba(245,241,230,.10); }
+.roster-role { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #a8a398; }
+.roster-name { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.roster-name b { font-size: 26px; letter-spacing: -.03em; color: #f5f1e6; }
+.roster-name span { font-size: 13px; color: #a8a398; }
+.roster-list li.tba b { color: #817c72; }
+.roster-new { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #0b0b0b; background: #d4af37; padding: 4px 10px; white-space: nowrap; }
+.roster-note { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #a8a398; white-space: nowrap; }
+.roster-foot { display: flex; gap: 12px; align-items: baseline; padding: 14px 22px; border-top: 1px solid rgba(245,241,230,.10); font-size: 14px; color: #c4bfb5; }
+.roster-foot span { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #a8a398; }
+@media (max-width: 720px) {
+  .prose .roster { margin: 1.6em 0; }
+  .roster-list li { grid-template-columns: 1fr auto; gap: 6px 12px; }
+  .roster-role { grid-column: 1 / -1; }
+  .roster-name b { font-size: 22px; }
+}

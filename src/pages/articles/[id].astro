@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import StoryLabel from '../../components/StoryLabel.astro';
 import Picture from '../../components/Picture.astro';
+import ArticleBody from '../../components/ArticleBody.astro';
 import { render } from 'astro:content';
 import { articles, articleUrl, url, fmtDate, tagUrl, type Article } from '../../lib/site';
 import { leagueByName } from '../../data/leagues';
@@ -75,7 +76,7 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
       </div>
       <Picture class="hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" eager />
       {d.imageCredit && <p class="credit">Photo: {d.imageCredit}</p>}
-      <div class="prose"><Content /></div>
+      <ArticleBody rosters={d.rosters}><Content /></ArticleBody>
 
     </article>
     {next.length > 0 && (

@@ -1,0 +1,27 @@
+---
+// Renders the article text and places roster cards in it:
+// at each "[roster]" line, in order, or else after the second paragraph.
+import { getCollection } from 'astro:content';
+import { rosterHtml } from '../lib/roster';
+interface Props { rosters: string[] }
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const all = await getCollection('teams');
+const teams = Astro.props.rosters
+  .map((r) => all.find((t) => slug(t.id) === slug(r)))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+let html = await Astro.slots.render('default');
+const cards = teams.map(rosterHtml);
+const marker = /<p>\s*\\?\[roster\\?\]\s*<\/p>/i;
+const rest: string[] = [];
+for (const c of cards) {
+  if (marker.test(html)) html = html.replace(marker, c);
+  else rest.push(c);
+}
+html = html.replace(new RegExp(marker.source, 'gi'), '');
+if (rest.length) {
+  let n = 0;
+  const at = html.replace(/<\/p>/g, (m) => (++n === 2 ? m + '\u0000' : m));
+  html = at.includes('\u0000') ? at.replace('\u0000', rest.join('')) : html + rest.join('');
+}
+---
+<div class="prose" set:html={html} />
