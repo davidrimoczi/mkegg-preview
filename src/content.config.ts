@@ -27,30 +27,24 @@ const articles = defineCollection({
     // Free tags, e.g. ['LEC', 'Carzzy', 'Movistar KOI']. Each becomes a clickable page.
     tags: z.array(z.string()).nullable().optional().transform((t) => (t ?? []).map((x) => x.trim()).filter(Boolean)),
     featured: z.boolean().default(false),
-    // Roster cards to show in the article (picked from Teams in the editor).
-    // The editor stores the team file's path; we keep just its name, e.g. 'dplus-kia-2027'.
-    rosters: z.array(z.string()).nullable().optional()
-      .transform((r) => (r ?? []).map((x) => x.split('/').pop()!.replace(/\.ya?ml$/, '')).filter(Boolean)),
+    // Roster cards: typed straight into the article in the editor. Each one is placed
+    // where the text has a line saying [roster], or after the second paragraph.
+    rosters: z.array(z.object({
+      team: z.string(),
+      subtitle: z.string().nullable().optional(),
+      logo: z.string().nullable().optional(),
+      players: z.array(z.object({
+        role: z.string().nullable().optional(),
+        name: z.string(),
+        realName: z.string().nullable().optional(),
+        tag: z.string().nullable().optional(),
+        gold: z.boolean().nullable().optional(),
+      })).nullable().optional().transform((p) => p ?? []),
+      footLabel: z.string().nullable().optional(),
+      footText: z.string().nullable().optional(),
+    })).nullable().optional().transform((r) => r ?? []),
     draft: z.boolean().default(false),
   }),
 });
 
-// Team rosters for the roster card in articles. One YAML file per team and season.
-const teams = defineCollection({
-  loader: glob({ pattern: '**/*.{yml,yaml}', base: './src/content/teams' }),
-  schema: z.object({
-    name: z.string(),
-    league: z.enum(['LEC', 'LCK', 'LPL', 'LCS', 'Other']).default('LEC'),
-    season: z.coerce.string().default('2027'),
-    coach: z.string().nullable().optional(),
-    players: z.array(z.object({
-      role: z.enum(['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Sub']),
-      name: z.string(),
-      realName: z.string().nullable().optional(),
-      note: z.string().nullable().optional(),
-      isNew: z.boolean().nullable().optional(),
-    })).default([]),
-  }),
-});
-
-export const collections = { articles, teams };
+export const collections = { articles };

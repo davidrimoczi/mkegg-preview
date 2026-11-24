@@ -82,13 +82,47 @@ content:
         type: boolean
         default: false
       - name: rosters
-        label: Roster card (optional). Pick a team; the card goes where you type [roster] on its own line, or after the second paragraph
-        type: reference
+        label: Roster card (optional). Add one and fill it in. It appears where you type [roster] on its own line in the article, or after the second paragraph
+        type: object
         list: true
-        options:
-          collection: teams
-          search: name
-          label: "{league} · {name} {season}"
+        fields:
+          - name: team
+            label: Team name (e.g. Dplus KIA)
+            type: string
+            required: true
+          - name: subtitle
+            label: Line under the team name (e.g. LCK 2027 roster)
+            type: string
+          - name: logo
+            label: Team logo (optional; square works best)
+            type: image
+          - name: players
+            label: Rows (one per player, top to bottom)
+            type: object
+            list: true
+            fields:
+              - name: role
+                label: Role (e.g. Top)
+                type: string
+              - name: name
+                label: Player name (e.g. Doran)
+                type: string
+              - name: realName
+                label: Real name (optional, shown small)
+                type: string
+              - name: tag
+                label: Tag on the right (optional, e.g. New · from T1)
+                type: string
+              - name: gold
+                label: Gold tag (for new signings)
+                type: boolean
+                default: false
+          - name: footLabel
+            label: Bottom line label (e.g. Head coach; leave empty for no bottom line)
+            type: string
+          - name: footText
+            label: Bottom line text (e.g. cvMax)
+            type: string
       - name: draft
         label: Draft (only visible on the preview site)
         type: boolean
@@ -97,54 +131,3 @@ content:
         label: Article
         type: rich-text
 
-  - name: teams
-    label: Teams (rosters)
-    type: collection
-    path: src/content/teams
-    format: yaml
-    filename: "{fields.name}-{fields.season}.yml"
-    view:
-      fields: [name, league, season]
-      primary: name
-      sort: [league, name]
-    fields:
-      - name: name
-        label: Team name
-        type: string
-        required: true
-      - name: league
-        label: League
-        type: select
-        default: LEC
-        options:
-          values: [LEC, LCK, LPL, LCS, Other]
-      - name: season
-        label: Season
-        type: string
-        default: "2027"
-      - name: coach
-        label: Head coach
-        type: string
-      - name: players
-        label: Players (in order Top, Jungle, Mid, ADC, Support)
-        type: object
-        list: true
-        fields:
-          - name: role
-            label: Role
-            type: select
-            options:
-              values: [Top, Jungle, Mid, ADC, Support, Sub]
-          - name: name
-            label: Player name (e.g. Doran)
-            type: string
-          - name: realName
-            label: Real name (optional)
-            type: string
-          - name: note
-            label: Short note (e.g. from T1)
-            type: string
-          - name: isNew
-            label: New signing (gold NEW tag)
-            type: boolean
-            default: false

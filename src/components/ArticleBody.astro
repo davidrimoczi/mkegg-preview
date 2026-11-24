@@ -1,16 +1,17 @@
 ---
 // Renders the article text and places roster cards in it:
 // at each "[roster]" line, in order, or else after the second paragraph.
-import { getCollection } from 'astro:content';
-import { rosterHtml } from '../lib/roster';
-interface Props { rosters: string[] }
-const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const all = await getCollection('teams');
-const teams = Astro.props.rosters
-  .map((r) => all.find((t) => slug(t.id) === slug(r)))
-  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+import { getImage } from 'astro:assets';
+import { rosterHtml, type RosterCard } from '../lib/roster';
+import { mediaMeta } from '../lib/media';
+interface Props { rosters: RosterCard[] }
 let html = await Astro.slots.render('default');
-const cards = teams.map(rosterHtml);
+const cards: string[] = [];
+for (const c of Astro.props.rosters) {
+  const meta = await mediaMeta(c.logo ?? undefined);
+  const logo = meta ? (await getImage({ src: meta, width: Math.min(96, meta.width), format: 'webp' })).src : undefined;
+  cards.push(rosterHtml(c, logo));
+}
 const marker = /<p>\s*\\?\[roster\\?\]\s*<\/p>/i;
 const rest: string[] = [];
 for (const c of cards) {
