@@ -15,6 +15,7 @@ rosters:
   - team: Dplus KIA
     subtitle: LCK 2027 Roster
     logo: /media/Dplus-kia.webp
+    logoWhite: true
     players:
       - role: Top
         name: Doran
