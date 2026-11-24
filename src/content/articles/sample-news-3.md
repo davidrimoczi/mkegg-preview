@@ -11,6 +11,8 @@ tags:
   - LCK
   - Transfers
 featured: false
+rosters:
+  - src/content/teams/dplus-kia-2027.yml
 draft: true
 ---
 
@@ -19,3 +21,5 @@ draft: true
 ## [Section heading]
 
 [Body paragraph. Real articles go here.]
+
+[Text after the roster card. The card lands after the second paragraph, or wherever you type [roster] on its own line.]

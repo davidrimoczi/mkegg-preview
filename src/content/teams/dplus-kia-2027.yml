@@ -1,0 +1,30 @@
+name: Dplus KIA
+league: LCK
+season: '2027'
+coach: cvMax
+players:
+  - role: Top
+    name: Doran
+    realName: Choi Hyeon-joon
+    note: from T1
+    isNew: true
+  - role: Jungle
+    name: Kanavi
+    realName: Seo Jin-hyeok
+    note: from Hanwha Life
+    isNew: true
+  - role: Mid
+    name: ShowMaker
+    realName: Heo Su
+    note: ''
+    isNew: false
+  - role: ADC
+    name: Smash
+    realName: Shin Geum-jae
+    note: ''
+    isNew: false
+  - role: Support
+    name: TBA
+    realName: ''
+    note: ''
+    isNew: false
