@@ -33,6 +33,7 @@ const articles = defineCollection({
       team: z.string(),
       subtitle: z.string().nullable().optional(),
       logo: z.string().nullable().optional(),
+      logoWhite: z.boolean().nullable().optional(),
       players: z.array(z.object({
         role: z.string().nullable().optional(),
         name: z.string(),

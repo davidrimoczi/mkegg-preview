@@ -96,6 +96,10 @@ content:
           - name: logo
             label: Team logo (optional; square works best)
             type: image
+          - name: logoWhite
+            label: Turn the logo white (tick this if the logo is dark and hard to see)
+            type: boolean
+            default: false
           - name: players
             label: Rows (one per player, top to bottom)
             type: object

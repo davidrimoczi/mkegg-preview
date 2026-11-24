@@ -2,7 +2,7 @@
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 
 export type RosterCard = {
-  team: string; subtitle?: string | null; logo?: string | null;
+  team: string; subtitle?: string | null; logo?: string | null; logoWhite?: boolean | null;
   players: { role?: string | null; name: string; realName?: string | null; tag?: string | null; gold?: boolean | null }[];
   footLabel?: string | null; footText?: string | null;
 };
@@ -10,7 +10,7 @@ export type RosterCard = {
 export function rosterHtml(c: RosterCard, logoSrc?: string): string {
   const initials = c.team.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).filter(Boolean).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
   const badge = logoSrc
-    ? `<img class="roster-logo" src="${esc(logoSrc)}" alt="" width="44" height="44" loading="lazy" decoding="async">`
+    ? `<img class="roster-logo${c.logoWhite ? ' white' : ''}" src="${esc(logoSrc)}" alt="" width="44" height="44" loading="lazy" decoding="async">`
     : `<span class="roster-badge" aria-hidden="true">${esc(initials)}</span>`;
   const rows = c.players.map((p) => {
     const tag = p.tag ? `<span class="${p.gold ? 'roster-new' : 'roster-note'}">${esc(p.tag)}</span>` : '<span></span>';

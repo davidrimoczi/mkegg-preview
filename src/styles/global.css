@@ -375,3 +375,4 @@ body:has(.article-main) .site-footer { margin-top: 0; }
   .roster-name b { font-size: 22px; }
 }
 .roster-logo { width: 44px; height: 44px; object-fit: contain; flex: none; }
+.roster-logo.white { filter: brightness(0) invert(1); }
