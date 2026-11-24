@@ -42,6 +42,7 @@ rosters:
       - role: Support
         name: Delight
         realName: Yoo Hwan-joong
+        photo: /media/HLE_Delight_2026_Split_1-1.webp
         tag: New - from HLE
         gold: true
     footLabel: Head coach
