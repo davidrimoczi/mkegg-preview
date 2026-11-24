@@ -51,7 +51,7 @@ draft: true
 
 **[Question one?]**
 
-[Answer.]
+Dplus KIA reported new roster for the 2027 LCK season.
 
 [roster]
 
