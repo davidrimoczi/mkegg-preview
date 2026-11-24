@@ -20,20 +20,24 @@ rosters:
       - role: Top
         name: Doran
         realName: Choi Hyeon-joon
+        photo: /media/T1_Doran_2026_LCK_Cup.webp
         tag: New - from T1
         gold: true
       - role: Jungle
         name: Kanavi
         realName: Seo Jin-hyeok
+        photo: /media/HLE_Kanavi_2026_Split_1.webp
         tag: New - from HLE
         gold: true
       - role: Mid
         name: ShowMaker
         realName: Heo Su
+        photo: /media/DK_ShowMaker_2026_Split_1.webp
         gold: false
       - role: ADC
         name: Smash
         realName: Shin Geum-jae
+        photo: /media/DK_Smash_2026_Split_1.webp
         gold: false
       - role: Support
         name: TBA
