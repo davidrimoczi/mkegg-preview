@@ -30,15 +30,19 @@ const group = (k: string) => (k === 'News' ? 'news' : k === 'Interview' ? 'inter
   <div class="wrap">
     <section class="home-grid">
       {lead ? (
-        <article class="lead">
-          <a href={articleUrl(lead)}><Picture src={lead.data.image} alt={lead.data.imageAlt} note="Lead photo" eager /></a>
-          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-            <StoryLabel label={lead.data.label} />
-            <span class="meta">{lead.data.league} · {lead.data.kind}{lead.data.readTime ? ` · ${lead.data.readTime} min read` : ''}</span>
-          </div>
-          <h1><a href={articleUrl(lead)}>{lead.data.title}</a></h1>
-          <p class="standfirst">{lead.data.standfirst}</p>
-        </article>
+        <a class="lead lead-hero" href={articleUrl(lead)}>
+          <Picture class="lead-img" src={lead.data.image} alt={lead.data.imageAlt} note="Lead photo" ratio="auto" sizes="(max-width: 900px) 100vw, 900px" eager />
+          <span class="lead-fade" aria-hidden="true"></span>
+          <span class="lead-text">
+            <span class="lead-tags">
+              {lead.data.featured && <span class="feat-tag">Featured</span>}
+              <StoryLabel label={lead.data.label} />
+            </span>
+            <h1><span class="uline">{lead.data.title}</span></h1>
+            <span class="standfirst">{lead.data.standfirst}</span>
+            <span class="lead-meta">{lead.data.league} · {lead.data.kind}{lead.data.readTime ? ` · ${lead.data.readTime} min read` : ''}<span class="go">Read the story →</span></span>
+          </span>
+        </a>
       ) : (
         <div class="lead">
           <span class="eyebrow">Independent esports media</span>
