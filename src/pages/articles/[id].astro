@@ -50,11 +50,18 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
   </Fragment>
   <div class="article-main" data-reading>
     <article class="article">
-      <div class="crumbs">
-        <a href={url(hub ? `/${hub.slug}/` : '/')}>{d.league}</a><span aria-hidden="true">/</span><a href={url(`/${section}/`)}>{d.kind}</a>
-      </div>
-      <h1>{d.title}</h1>
-      <p class="standfirst" style="font-size:clamp(18px,1.8vw,22px)">{d.standfirst}</p>
+      <header class="art-hero">
+        <Picture class="art-hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" ratio="auto" sizes="(max-width: 1100px) 100vw, 1040px" eager />
+        <span class="art-hero-fade" aria-hidden="true"></span>
+        {d.imageCredit && <p class="art-hero-credit">Photo: {d.imageCredit}</p>}
+        <div class="art-hero-text">
+          <div class="crumbs">
+            <a href={url(hub ? `/${hub.slug}/` : '/')}>{d.league}</a><span aria-hidden="true">/</span><a href={url(`/${section}/`)}>{d.kind}</a>
+          </div>
+          <h1>{d.title}</h1>
+          <p class="standfirst">{d.standfirst}</p>
+        </div>
+      </header>
       <div class="article-bar">
         <div class="who">
           <b>By {authorUrl ? <a href={authorUrl} rel="author">{authorName}</a> : authorName}</b>
@@ -74,8 +81,6 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
           </button>
         </div>
       </div>
-      <Picture class="hero-img" src={d.image} alt={d.imageAlt} note="Lead photo" eager />
-      {d.imageCredit && <p class="credit">Photo: {d.imageCredit}</p>}
       <ArticleBody rosters={d.rosters}><Content /></ArticleBody>
 
     </article>
