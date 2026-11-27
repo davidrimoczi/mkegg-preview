@@ -60,27 +60,27 @@ const section = { News: 'news', Feature: 'features', Interview: 'interviews', An
           </div>
           <h1>{d.title}</h1>
           <p class="standfirst">{d.standfirst}</p>
+          <div class="article-bar">
+            <div class="who">
+              <b>By {authorUrl ? <a href={authorUrl} rel="author">{authorName}</a> : authorName}</b>
+              <span class="when"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
+              {d.updated && <span class="when">Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></span>}
+            </div>
+            {d.tags.length > 0 && (
+              <nav class="tags tags-inline" aria-label="Tags">
+                {d.tags.map((t) => <a class="tag" href={tagUrl(t)} rel="tag">{t}</a>)}
+              </nav>
+            )}
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+              <StoryLabel label={d.label} />
+              <button class="lamp" type="button" data-lamp aria-pressed="false">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle class="glow" cx="12" cy="9" r="9" /><path class="bulb" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" stroke-width="1.6" stroke-linejoin="round" /></svg>
+                <span class="on-label">Reading light</span><span class="off-label">Light off</span>
+              </button>
+            </div>
+          </div>
         </div>
       </header>
-      <div class="article-bar">
-        <div class="who">
-          <b>By {authorUrl ? <a href={authorUrl} rel="author">{authorName}</a> : authorName}</b>
-          <span class="when"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>{d.readTime ? ` · ${d.readTime} min read` : ''}</span>
-          {d.updated && <span class="when">Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></span>}
-        </div>
-        {d.tags.length > 0 && (
-          <nav class="tags tags-inline" aria-label="Tags">
-            {d.tags.map((t) => <a class="tag" href={tagUrl(t)} rel="tag">{t}</a>)}
-          </nav>
-        )}
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-          <StoryLabel label={d.label} />
-          <button class="lamp" type="button" data-lamp aria-pressed="false">
-            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle class="glow" cx="12" cy="9" r="9" /><path class="bulb" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" stroke-width="1.6" stroke-linejoin="round" /></svg>
-            <span class="on-label">Reading light</span><span class="off-label">Light off</span>
-          </button>
-        </div>
-      </div>
       <ArticleBody rosters={d.rosters}><Content /></ArticleBody>
 
     </article>
